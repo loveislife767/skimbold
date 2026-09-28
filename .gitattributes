@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.png binary
+*.pdf binary
+*.zip binary
+# Vendored third-party builds must stay byte-identical to the official release.
+extension/vendor/** -text
+test/fixtures/vendor/** -text

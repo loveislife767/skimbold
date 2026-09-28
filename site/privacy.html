@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Privacy policy | Skimbold</title>
+  <meta name="description" content="Skimbold collects no data. Page text is processed inside your browser and never sent anywhere.">
+  <link rel="canonical" href="https://loveislife767.github.io/skimbold/privacy.html">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="stylesheet" href="shared/theme.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="brand" href="./" aria-label="Skimbold home">
+        <img src="icons/icon.svg" width="28" height="28" alt="">
+        <span class="skb-wordmark"><b>Skim</b>bold</span>
+      </a>
+      <nav class="masthead__nav" aria-label="Sections">
+        <a href="./#how">How it works</a>
+        <a href="./#install">Install</a>
+        <a href="reader/reader.html">Reader</a>
+        <a href="https://github.com/loveislife767/skimbold">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <article class="prose">
+      <h1>Privacy policy</h1>
+      <p class="prose__meta">Effective 27 September 2026. Applies to the Skimbold browser extension and this website.</p>
+
+      <p class="prose__summary">Skimbold collects no data. It has no servers, no accounts and no analytics. Everything it does happens inside your browser, and the text you read is never sent anywhere.</p>
+
+      <h2>The text on the pages you read</h2>
+      <p>When you turn Skimbold on for a page, with the keyboard shortcut, the toolbar button, the right-click menu or an always-on setting, it reads the text of that page so it can bold the start of each word. This happens entirely on your device. Skimbold does not send, store or log that text, and it does not keep a record of which pages you visit.</p>
+
+      <h2>What Skimbold stores, and where</h2>
+      <ul>
+        <li><strong>Your settings:</strong> how many letters to bold, strength, fade and boldness, what the toolbar button does, your Reader preferences, and the sites you chose to keep it always on or to skip. They are saved in your browser's own extension storage. If you have turned on sync in your browser, your browser may copy them to your other devices; that copy is handled by your browser under its own privacy terms, and Skimbold never sees it. If sync storage is full or turned off, the settings stay on this device only.</li>
+        <li><strong>Your last Reader document:</strong> the Reader remembers the last text or file you opened and how far you scrolled, so you can pick up where you left off. It is kept in your browser's local storage on this device and is never uploaded. Documents over 4 MB, and text or PDFs sent from a private (incognito) window, are not remembered.</li>
+        <li><strong>Text you send to the Reader:</strong> when you choose "Open selection in Skimbold Reader", the selected text is held in temporary session storage until the Reader opens it, then deleted.</li>
+      </ul>
+      <p>Removing the extension from your browser deletes everything it stored.</p>
+
+      <h2>Network requests</h2>
+      <p>Skimbold makes no network requests of its own. There is no analytics, crash reporting, advertising or remotely loaded code.</p>
+      <p>The one exception is when you ask the Reader to open a PDF from the tab you're on. The Reader then downloads that PDF from the address the tab is already showing. In Chrome, Edge and other Chromium browsers it does so through the tab's own page, so sites you are signed in to keep working; Firefox doesn't let extensions into its PDF viewer, so there the Reader requests the same address itself, with the cookies your browser keeps for that site. The file is read on your device and is not sent anywhere else.</p>
+
+      <h2>Permissions, and why they're needed</h2>
+      <ul>
+        <li><strong>Active tab:</strong> lets Skimbold change the page you're on, and only when you use the shortcut, the toolbar button or the menu.</li>
+        <li><strong>Scripting:</strong> adds the code that bolds the text to that page.</li>
+        <li><strong>Storage:</strong> saves your settings, as described above.</li>
+        <li><strong>Context menus:</strong> adds Skimbold's entries to the right-click menu.</li>
+        <li><strong>Access to a site (optional):</strong> requested only when you switch on "Always on" for a site, or for every site. Your browser asks you to confirm first. You can take it back at any time in Skimbold's settings or your browser's extension settings, and Skimbold then stops turning on by itself there.</li>
+      </ul>
+
+      <h2>This website</h2>
+      <p>This site is hosted on GitHub Pages. It uses no cookies, analytics or trackers, and loads nothing from other sites. As the host, GitHub may record technical details such as IP addresses to keep its service secure; see <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>. The web version of the Reader works the same way as the one in the extension: files you open are read on your device and are not uploaded.</p>
+
+      <h2>Children</h2>
+      <p>Skimbold collects no personal information from anyone, including children.</p>
+
+      <h2>Changes</h2>
+      <p>If this policy changes, the new version will be posted on this page with a new effective date, and the change will be listed in the project's changelog.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about privacy are welcome. Please <a href="https://github.com/loveislife767/skimbold/issues">open an issue on GitHub</a>.</p>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span class="skb-wordmark footer__mark"><b>Skim</b>bold</span>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="./">Home</a>
+        <a href="reader/reader.html">Reader</a>
+        <a href="https://github.com/loveislife767/skimbold">Source code</a>
+        <a href="https://github.com/loveislife767/skimbold/issues">Report a problem</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

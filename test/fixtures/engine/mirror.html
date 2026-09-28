@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Styled fields</title>
+<style>
+  body { font: 16px/24px sans-serif; }
+  .field { position: relative; width: 600px; height: 24px; }
+  .field input { position: absolute; inset: 0; margin: 0; padding: 0; border: 0; background: none; font: inherit; color: transparent; caret-color: black; }
+  .copy { white-space: pre; }
+  .key { color: #0550ae; }
+  #code-view textarea { position: absolute; width: 600px; height: 24px; margin: 0; padding: 0; border: 0; resize: none; background: none; font: inherit; color: transparent; }
+</style>
+</head>
+<body>
+<main id="page">
+  <p id="intro">Words around the fields are bolded as usual.</p>
+  <!-- A search bar that colours what is typed (GitHub's filter and search bars): the field's own
+       text is transparent, and an aria-hidden copy under it shows the text styled. -->
+  <div class="field"><input id="query" value="is:open label:bug"><div class="copy" id="query-copy" aria-hidden="true"></div></div>
+  <!-- A code view (GitHub's file view): a transparent read-only textarea carries the caret and the
+       selection, and the highlighted lines, three levels away, use no pre or code element. -->
+  <div id="code-view"><div><div><textarea id="source" readonly>const harbour = boats.filter(returned);</textarea></div></div><div><div><div id="lines" aria-hidden="true"><div><span class="key">const</span> harbour = boats.filter(returned);</div></div></div></div></div>
+  <!-- A field whose text shows: an aria-hidden hint beside it is ordinary text. -->
+  <div><input value="Visible words"><span id="hint" aria-hidden="true">Decorative hint words</span></div>
+</main>
+<script>
+  // The copy is redrawn from the field's value on every keystroke, as the page's highlighter does.
+  const query = document.getElementById('query');
+  const copy = document.getElementById('query-copy');
+  function redraw() {
+    copy.replaceChildren();
+    query.value.split(' ').forEach((token, i) => {
+      if (i > 0) copy.append(' ');
+      const colon = token.indexOf(':');
+      if (colon === -1) {
+        copy.append(token);
+        return;
+      }
+      const key = document.createElement('span');
+      key.className = 'key';
+      key.textContent = token.slice(0, colon + 1);
+      copy.append(key, token.slice(colon + 1));
+    });
+  }
+  query.addEventListener('input', redraw);
+  redraw();
+</script>
+</body>
+</html>

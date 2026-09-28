@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frames that are slow to arrive</title>
+<style>.filler { height: 3000px; }</style>
+</head>
+<body>
+<p id="top-text">Words at the top of a page whose frames take their time.</p>
+<!-- The test holds this request, so the frame is still loading when Skimbold is turned on. -->
+<iframe id="loading" src="/engine/frame-child.html?held" title="Loading frame" width="600" height="100"></iframe>
+<div class="filler"></div>
+<!-- Far below the fold: the browser loads it only when it is scrolled near (a video embed). -->
+<iframe id="lazy" src="/engine/frame-child.html?lazy" loading="lazy" title="Lazy frame" width="600" height="100"></iframe>
+</body>
+</html>

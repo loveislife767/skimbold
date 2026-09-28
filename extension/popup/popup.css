@@ -1,0 +1,134 @@
+/* Popup: sits on the shared theme (../shared/theme.css). Sized for the toolbar panel. */
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  width: 340px;
+  background: var(--skb-surface);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-2);
+  padding: var(--skb-space-2) var(--skb-space-3) var(--skb-space-2) var(--skb-space-4);
+  border-bottom: 1px solid var(--skb-line);
+}
+
+.head img {
+  flex: none;
+}
+
+.head__name {
+  flex: 1;
+  margin: 0;
+  font-size: var(--skb-text-xl);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.main {
+  display: grid;
+  gap: var(--skb-space-3);
+  padding: var(--skb-space-3) var(--skb-space-4) var(--skb-space-4);
+}
+
+/* ── This page ─────────────────────────────────────────────────────────── */
+
+.page {
+  display: grid;
+  gap: var(--skb-space-2);
+}
+
+.page > .skb-btn {
+  width: 100%;
+  min-height: 40px;
+}
+
+/* A filled dot shows the page is on, so the state never rests on the label alone. */
+.page__dot {
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--skb-accent);
+}
+
+.page__toggle[data-active="true"] .page__dot {
+  display: inline-block;
+}
+
+.shortcut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px var(--skb-space-2);
+  min-height: 22px;
+  margin: 0;
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+  text-align: center;
+}
+
+.shortcut--covered {
+  display: none;
+}
+
+.shortcut__keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut .skb-btn {
+  min-height: 24px;
+  padding: 0 var(--skb-space-2);
+}
+
+/* ── Preview ───────────────────────────────────────────────────────────── */
+
+.preview {
+  --preview-weight: 700;
+  --preview-fade: 0%;
+  margin: 0;
+  padding: var(--skb-space-2) var(--skb-space-3);
+  border-radius: var(--skb-radius-sm);
+  background: var(--skb-paper);
+  color: color-mix(in srgb, var(--skb-ink) calc(100% - var(--preview-fade)), transparent);
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-lg);
+  line-height: 1.5;
+}
+
+.preview b {
+  color: var(--skb-ink);
+  font-weight: var(--preview-weight);
+}
+
+/* ── Always on / skip ──────────────────────────────────────────────────── */
+
+.site {
+  min-height: 24px;
+}
+
+.site > span {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+/* Keeps the row's space while the tab is looked up, so the panel does not jump. */
+.site[data-pending="true"] {
+  visibility: hidden;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px var(--skb-space-3);
+  border-top: 1px solid var(--skb-line);
+}

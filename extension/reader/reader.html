@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Paste text or open a text, Markdown, HTML or PDF file and read it with the start of every word in bold.">
+  <title>Skimbold Reader</title>
+  <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="reader.css">
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/core.js"></script>
+  <script src="pdf-text.js"></script>
+  <script src="reader.js"></script>
+</head>
+<body>
+  <a class="rd-skip skb-btn skb-btn--small" href="#rd-main">Skip to content</a>
+
+  <header class="rd-bar" id="rd-bar">
+    <div class="rd-bar__row">
+      <button class="rd-brand" type="button" id="rd-home" title="Start page" aria-label="Skimbold Reader, start page">
+        <img src="../icons/icon.svg" width="28" height="28" alt="">
+        <span class="skb-wordmark rd-brand__name"><b>Skim</b>bold</span>
+        <span class="rd-brand__sub">Reader</span>
+      </button>
+      <p class="rd-bar__title" id="rd-bar-title" hidden></p>
+      <div class="rd-bar__actions">
+        <button class="skb-btn skb-btn--ghost rd-tool" type="button" id="rd-open" aria-keyshortcuts="Control+O Meta+O" title="Open a file (Ctrl+O)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 6.2c0-.9.7-1.7 1.7-1.7h3l1.6 1.8h6.4c.9 0 1.7.8 1.7 1.7v6.3c0 .9-.8 1.7-1.7 1.7H4.5c-1 0-1.7-.8-1.7-1.7Z"/></svg>
+          <span class="rd-tool__label">Open</span>
+        </button>
+        <button class="skb-btn skb-btn--ghost rd-tool" type="button" id="rd-paste" title="Paste text to read">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4" width="11" height="13" rx="1.8"/><path d="M7.5 4v-.6c0-.7.5-1.2 1.2-1.2h2.6c.7 0 1.2.5 1.2 1.2V4M7.5 9h5M7.5 12h3.5"/></svg>
+          <span class="rd-tool__label">Paste</span>
+        </button>
+        <span class="rd-bar__sep" aria-hidden="true"></span>
+        <label class="skb-switch rd-bold" title="Bold the start of every word (B)">
+          <input type="checkbox" role="switch" id="rd-bold" aria-keyshortcuts="B" checked>
+          <span class="rd-bold__label">Bold</span>
+        </label>
+        <button class="skb-btn skb-btn--ghost skb-btn--icon rd-aa" type="button" id="rd-display-toggle"
+                popovertarget="rd-display" aria-haspopup="dialog" aria-controls="rd-display" aria-expanded="false"
+                aria-label="Text and display settings" title="Text and display settings">
+          <span aria-hidden="true">Aa</span>
+        </button>
+      </div>
+    </div>
+    <div class="rd-progress" id="rd-progress" hidden>
+      <div class="rd-progress__fill" id="rd-progress-fill"></div>
+    </div>
+  </header>
+
+  <div class="rd-panel" id="rd-display" popover role="dialog" aria-labelledby="rd-display-title">
+    <div class="rd-panel__head">
+      <h2 class="rd-panel__title" id="rd-display-title">Text and display</h2>
+      <button class="skb-btn skb-btn--ghost skb-btn--icon skb-btn--small" type="button" popovertarget="rd-display" popovertargetaction="hide" aria-label="Close">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l9 9M14.5 5.5l-9 9"/></svg>
+      </button>
+    </div>
+
+    <div class="rd-panel__group">
+      <div class="skb-field">
+        <span class="skb-field__label" id="rd-letters-label">Bold letters</span>
+        <div class="skb-seg" role="radiogroup" aria-labelledby="rd-letters-label" id="rd-letters">
+          <input type="radio" name="rd-letters" id="rd-letters-auto" value="auto">
+          <label for="rd-letters-auto">Auto</label>
+          <input type="radio" name="rd-letters" id="rd-letters-1" value="1">
+          <label for="rd-letters-1">1</label>
+          <input type="radio" name="rd-letters" id="rd-letters-2" value="2">
+          <label for="rd-letters-2">2</label>
+          <input type="radio" name="rd-letters" id="rd-letters-3" value="3">
+          <label for="rd-letters-3">3</label>
+        </div>
+      </div>
+      <div class="skb-field" id="rd-strength-field">
+        <label class="skb-field__label" for="rd-strength">Strength</label>
+        <output class="skb-field__value" for="rd-strength" id="rd-strength-value">3</output>
+        <input class="skb-range" type="range" id="rd-strength" min="1" max="5" step="1" value="3" aria-describedby="rd-strength-hint">
+        <p class="skb-field__hint" id="rd-strength-hint">How much of each word is bold in Auto mode.</p>
+      </div>
+      <p class="skb-field__hint rd-panel__shared" id="rd-shared-hint" hidden>Bold letters and strength are shared with Skimbold on web pages.</p>
+    </div>
+
+    <div class="rd-panel__group">
+      <div class="skb-field">
+        <span class="skb-field__label" id="rd-theme-label">Theme</span>
+        <div class="skb-seg" role="radiogroup" aria-labelledby="rd-theme-label" id="rd-theme">
+          <input type="radio" name="rd-theme" id="rd-theme-auto" value="auto">
+          <label for="rd-theme-auto"><span class="rd-swatch rd-swatch--auto" aria-hidden="true"></span>Auto</label>
+          <input type="radio" name="rd-theme" id="rd-theme-light" value="light">
+          <label for="rd-theme-light"><span class="rd-swatch rd-swatch--light" aria-hidden="true"></span>Light</label>
+          <input type="radio" name="rd-theme" id="rd-theme-sepia" value="sepia">
+          <label for="rd-theme-sepia"><span class="rd-swatch rd-swatch--sepia" aria-hidden="true"></span>Sepia</label>
+          <input type="radio" name="rd-theme" id="rd-theme-dark" value="dark">
+          <label for="rd-theme-dark"><span class="rd-swatch rd-swatch--dark" aria-hidden="true"></span>Dark</label>
+        </div>
+      </div>
+      <div class="skb-field">
+        <span class="skb-field__label" id="rd-font-label">Font</span>
+        <div class="skb-seg" role="radiogroup" aria-labelledby="rd-font-label" id="rd-font">
+          <input type="radio" name="rd-font" id="rd-font-serif" value="serif">
+          <label for="rd-font-serif" class="rd-font-serif">Serif</label>
+          <input type="radio" name="rd-font" id="rd-font-sans" value="sans">
+          <label for="rd-font-sans" class="rd-font-sans">Sans</label>
+        </div>
+      </div>
+      <div class="skb-field rd-size">
+        <span class="skb-field__label" id="rd-size-label">Text size</span>
+        <div class="rd-stepper" role="group" aria-labelledby="rd-size-label">
+          <button class="skb-btn skb-btn--icon" type="button" id="rd-size-down" aria-label="Smaller text" aria-keyshortcuts="-" title="Smaller text (−)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"/></svg>
+          </button>
+          <output class="rd-stepper__value" id="rd-size-value" aria-live="polite">20 px</output>
+          <button class="skb-btn skb-btn--icon" type="button" id="rd-size-up" aria-label="Larger text" aria-keyshortcuts="+" title="Larger text (+)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10M10 5v10"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="skb-field">
+        <label class="skb-field__label" for="rd-leading">Line spacing</label>
+        <output class="skb-field__value" for="rd-leading" id="rd-leading-value">1.7</output>
+        <input class="skb-range" type="range" id="rd-leading" min="1" max="3" step="0.05" value="1.7">
+      </div>
+      <div class="skb-field rd-width-field">
+        <label class="skb-field__label" for="rd-width">Line length</label>
+        <output class="skb-field__value" for="rd-width" id="rd-width-value">680 px</output>
+        <input class="skb-range" type="range" id="rd-width" min="320" max="1600" step="20" value="680">
+      </div>
+    </div>
+  </div>
+
+  <main class="rd-main" id="rd-main" tabindex="-1">
+    <section class="rd-home" id="rd-home-view" aria-labelledby="rd-home-title">
+      <div class="rd-home__inner">
+        <div class="rd-message" id="rd-message" tabindex="-1" hidden></div>
+
+        <h1 class="rd-home__title" id="rd-home-title" tabindex="-1">Paste text or open a file</h1>
+        <p class="rd-home__lead" id="rd-home-lead">Skimbold bolds the start of every word to help you focus and keep your place.</p>
+
+        <section class="rd-continue skb-card" id="rd-continue" aria-labelledby="rd-continue-label" hidden>
+          <div class="rd-continue__text">
+            <p class="rd-continue__label" id="rd-continue-label">Continue where you left off</p>
+            <p class="rd-continue__title" id="rd-continue-title"></p>
+            <p class="rd-continue__meta skb-muted" id="rd-continue-meta"></p>
+          </div>
+          <div class="rd-continue__actions">
+            <button class="skb-btn skb-btn--primary" type="button" id="rd-continue-open">Continue reading</button>
+            <button class="skb-btn skb-btn--ghost skb-btn--small" type="button" id="rd-forget">Forget it</button>
+          </div>
+        </section>
+
+        <div class="rd-drop" id="rd-drop">
+          <label class="skb-sr-only" for="rd-input">Text to read</label>
+          <textarea class="rd-drop__input" id="rd-input" rows="6" spellcheck="false" placeholder="Paste or type text here" aria-describedby="rd-formats"></textarea>
+          <div class="rd-drop__bar">
+            <p class="rd-drop__hint">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.5 2.5H6c-.8 0-1.5.7-1.5 1.5v12c0 .8.7 1.5 1.5 1.5h8c.8 0 1.5-.7 1.5-1.5V6.5Z"/><path d="M11.5 2.5v4h4"/></svg>
+              <span>Drop a file anywhere, or</span>
+              <button class="skb-btn skb-btn--small" type="button" id="rd-choose">Choose a file</button>
+            </p>
+            <button class="skb-btn skb-btn--primary" type="button" id="rd-read" disabled>Read</button>
+          </div>
+        </div>
+        <p class="rd-home__formats skb-muted" id="rd-formats">Text, Markdown, HTML and PDF files up to 100 MB. Everything is read on this device; nothing is uploaded.</p>
+        <p class="rd-home__formats skb-muted" id="rd-web-note" hidden>Skimbold can also bold the web pages you read. <a href="../">Get the free browser extension</a>.</p>
+
+        <ul class="rd-keys skb-muted" aria-label="Keyboard shortcuts">
+          <li><kbd class="skb-kbd" data-mod>Ctrl</kbd> + <kbd class="skb-kbd">V</kbd> paste</li>
+          <li><kbd class="skb-kbd" data-mod>Ctrl</kbd> + <kbd class="skb-kbd">O</kbd> open a file</li>
+          <li><kbd class="skb-kbd">B</kbd> bold on or off</li>
+          <li><kbd class="skb-kbd">+</kbd> <kbd class="skb-kbd">−</kbd> text size</li>
+        </ul>
+      </div>
+    </section>
+
+    <article class="rd-doc" id="rd-doc" tabindex="-1" aria-labelledby="rd-doc-title" hidden>
+      <header class="rd-doc__head">
+        <p class="rd-doc__title" id="rd-doc-title"></p>
+        <p class="rd-doc__meta" id="rd-doc-meta"></p>
+      </header>
+      <div class="rd-doc__body" id="rd-doc-body"></div>
+      <p class="rd-doc__loading" id="rd-doc-loading" hidden></p>
+      <footer class="rd-doc__end" id="rd-doc-end" hidden>
+        <p class="rd-doc__end-mark">End of document</p>
+        <div class="rd-doc__end-actions">
+          <button class="skb-btn skb-btn--small" type="button" id="rd-end-open">Open another file</button>
+          <button class="skb-btn skb-btn--ghost skb-btn--small" type="button" id="rd-end-close">Close</button>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <input class="rd-file" type="file" id="rd-file" tabindex="-1" aria-hidden="true"
+         accept=".txt,.text,.md,.markdown,.html,.htm,.pdf,text/*,application/pdf">
+  <div class="rd-dropzone" id="rd-dropzone" hidden>
+    <p class="rd-dropzone__label">Drop to read</p>
+  </div>
+  <p class="skb-sr-only" id="rd-status" role="status" aria-live="polite"></p>
+</body>
+</html>

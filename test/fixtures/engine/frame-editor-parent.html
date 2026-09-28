@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page with an editor frame</title>
+</head>
+<body>
+<p id="parent-text">A course page with notes you can edit below.</p>
+<iframe id="editor" src="/engine/frame-editor.html" title="Notes editor" width="600" height="200"></iframe>
+<main id="lesson"></main>
+<script>
+  // A lesson long enough that turning the page on takes the engine a few milliseconds.
+  const lesson = document.getElementById('lesson');
+  for (let i = 1; i <= 300; i++) {
+    lesson.appendChild(document.createElement('p')).textContent = `Paragraph ${i} of the lesson explains how tides rise and fall along the coast, twice every lunar day, as the moon and the sun pull on the oceans.`;
+  }
+</script>
+</body>
+</html>

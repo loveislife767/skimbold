@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hostile styles</title>
+<style>
+  /* Resets and rules real sites ship that would hide or flatten the engine's markup. */
+  b, strong { font-weight: normal !important; }
+  * { font-weight: 400 !important; }
+  :not(:defined) { visibility: hidden; }
+  body :not(:defined) { display: none; }
+  #hostile * { display: block !important; margin: 12px !important; background: #ff0 !important; }
+  span, span * { font-weight: 300 !important; color: #c00; letter-spacing: 4px; }
+  html body div * { visibility: hidden !important; }
+  p > * { float: left; position: relative; top: 40px; padding: 8px; border: 2px solid #00f; }
+  main :not(p):not(span):not(div):not(section) { opacity: 0 !important; }
+  #hostile, #in-block, #plain, #spanned, #faded { visibility: visible !important; }
+</style>
+</head>
+<body>
+<main>
+  <div id="hostile"><p id="in-block">Every descendant of this container is forced to display block.</p></div>
+  <p id="plain">Pages that reset bold and hide undefined elements still show this text.</p>
+  <p><span id="spanned">Span rules must not leak into the wrappers.</span></p>
+  <section><p id="faded">Opacity rules for unknown elements must not hide these words.</p></section>
+</main>
+</body>
+</html>

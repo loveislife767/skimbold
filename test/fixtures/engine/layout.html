@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text whose styles matter</title>
+<style>
+  body { font: 16px/1.5 Arial, sans-serif; margin: 16px; }
+  .row { display: flex; gap: 40px; }
+  .spread { display: flex; justify-content: space-between; width: 600px; }
+  .grid { display: grid; grid-template-columns: 200px 200px; }
+  .shop-icons { font-family: "Shop Icons", sans-serif; }
+  .clip { color: #213547; background: linear-gradient(90deg, #42b883, #35495e); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .black { font-weight: 900; }
+  .cap { text-transform: capitalize; }
+  @font-face { font-family: OnlyRegular; src: local("Arial"), local("Liberation Sans"), local("DejaVu Sans"); font-weight: 400; }
+  .no-synthesis { font-family: OnlyRegular, sans-serif; font-synthesis: none; }
+  .note { border: 1px solid red; min-height: 1em; }
+  .note:empty { display: none; }
+</style>
+</head>
+<body>
+<!-- Frameworks render interpolations as text nodes of their own ({"Posted by "}{name});
+     the script below builds these rows the same way. -->
+<div id="row" class="row"></div>
+<div id="spread" class="spread"></div>
+<div id="grid" class="grid"></div>
+<p id="single" class="row">A single text node in a flex row is bolded</p>
+<p id="icons"><span id="icon-class" class="material-symbols-outlined" aria-hidden="true">edit</span>
+  <i id="icon-font" class="shop-icons" aria-hidden="true">shopping_cart</i> <mat-icon id="icon-tag">search</mat-icon>
+  <span id="not-icon">ordinary words around the icons</span></p>
+<h1 id="gradient" class="clip">Progressive framework heading</h1>
+<h1 id="heavy" class="black">Extra heavy heading words</h1>
+<nav><a id="cap" class="cap" href="#top">the quick brown fox jumps</a></nav>
+<p id="synthesis" class="no-synthesis">Words in a face without bold</p>
+<div id="note" class="note">A note that the page clears</div>
+<!-- Text that is already bold, in line boxes of normal height: a heavier face (Arial Black on
+     Windows) would make these lines taller. -->
+<section id="bold-lines" style="font-family: Arial, sans-serif; line-height: normal; width: 600px">
+  <div id="bold-arial" style="font-weight: bold; font-size: 32px">Bold heading words here</div>
+  <p id="strong-para" style="font-size: 16px">Harbour masters record the <strong>tide tables</strong> each morning, and the <b>fishing fleet</b> plans its day around them while gulls circle overhead.</p>
+  <h2 id="section-title">Section heading number one</h2>
+  <table id="headers"><tr><th>Column title</th><th>Another header</th></tr></table>
+</section>
+<script>
+  const row = document.getElementById('row');
+  row.append('Posted by ', 'Alice');
+  row.appendChild(document.createElement('span')).textContent = 'Reply';
+  document.getElementById('spread').append('Hello, ', 'Alice', '!');
+  const grid = document.getElementById('grid');
+  grid.append('Posted by ', document.createComment(' '), 'Alice');
+  grid.appendChild(document.createElement('span')).textContent = 'Reply';
+</script>
+</body>
+</html>

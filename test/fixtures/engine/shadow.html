@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shadow roots</title>
+</head>
+<body>
+<main>
+  <p id="light">Light DOM words next to the component.</p>
+  <shore-card id="card"><span slot="title">Slotted title words</span></shore-card>
+  <div id="declarative"><template shadowrootmode="open"><p class="inner">Declarative shadow words appear here.</p></template></div>
+  <div id="closed"></div>
+</main>
+<script>
+  // An open shadow root with its own hostile styles, a nested open root, and a closed root.
+  const host = document.getElementById('card');
+  const root = host.attachShadow({ mode: 'open' });
+  const style = document.createElement('style');
+  style.textContent = ':not(:defined){visibility:hidden} b{font-weight:normal!important} p{margin:4px 0}';
+  const title = document.createElement('h3');
+  title.appendChild(document.createElement('slot')).name = 'title';
+  const body = document.createElement('p');
+  body.id = 'shadow-body';
+  body.textContent = 'Shadow paragraph words inside the component.';
+  const nestedHost = document.createElement('div');
+  nestedHost.id = 'nested-host';
+  const nested = nestedHost.attachShadow({ mode: 'open' });
+  const nestedText = document.createElement('p');
+  nestedText.id = 'nested-body';
+  nestedText.textContent = 'Nested shadow words deeper down.';
+  nested.appendChild(nestedText);
+  root.append(style, title, body, nestedHost);
+
+  const closed = document.getElementById('closed').attachShadow({ mode: 'closed' });
+  const secret = document.createElement('p');
+  secret.textContent = 'Closed shadow words stay out of reach.';
+  closed.appendChild(secret);
+  window.closedRootHtml = () => closed.innerHTML;
+</script>
+</body>
+</html>

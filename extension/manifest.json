@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Skimbold: Bold Word Starts for Easier Reading",
+  "short_name": "Skimbold",
+  "version": "1.0.0",
+  "description": "Bolds the first letters of every word so your eyes can glide through text. On any page, plus a reader for pasted text & PDFs.",
+  "homepage_url": "https://github.com/loveislife767/skimbold",
+  "minimum_chrome_version": "122",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Skimbold",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab", "scripting", "storage", "contextMenus"],
+  "optional_host_permissions": ["*://*/*"],
+  "commands": {
+    "toggle-page": {
+      "suggested_key": { "default": "Alt+R", "mac": "MacCtrl+Shift+R" },
+      "description": "Toggle Skimbold on the current page"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}

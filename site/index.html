@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Skimbold: bold the start of every word</title>
+  <meta name="description" content="Skimbold is a free, open-source browser extension that bolds the first letters of every word, so your eyes have an anchor on every line. Private: no tracking, no network requests.">
+  <link rel="canonical" href="https://loveislife767.github.io/skimbold/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Skimbold: bold the start of every word">
+  <meta property="og:description" content="A free, open-source browser extension that bolds the first letters of every word to help you focus and keep your place.">
+  <meta property="og:url" content="https://loveislife767.github.io/skimbold/">
+  <meta property="og:image" content="https://loveislife767.github.io/skimbold/icons/icon-128.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-128.png">
+  <link rel="stylesheet" href="shared/theme.css">
+  <link rel="stylesheet" href="site.css">
+  <script src="shared/core.js" defer></script>
+  <script src="site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="masthead">
+    <div class="wrap masthead__inner">
+      <a class="brand" href="./" aria-label="Skimbold home">
+        <img src="icons/icon.svg" width="28" height="28" alt="">
+        <span class="skb-wordmark"><b>Skim</b>bold</span>
+      </a>
+      <nav class="masthead__nav" aria-label="Sections">
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a href="reader/reader.html">Reader</a>
+        <a href="https://github.com/loveislife767/skimbold">GitHub</a>
+      </nav>
+      <label class="skb-switch page-switch" hidden>
+        <span>Skimbold this page</span>
+        <input type="checkbox" role="switch" id="page-switch">
+      </label>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <h1 class="hero__title" id="hero-title" data-skimbold-skip><span class="w"><b>Bo</b>ld</span> <span class="w"><b>t</b>he</span> <span class="w"><b>st</b>art</span> <span class="w"><b>o</b>f</span> <span class="w"><b>ev</b>ery</span> <span class="w"><b>wo</b>rd.</span></h1>
+      <p class="hero__lead">Skimbold is a free browser extension that bolds the first letters of each word. The heavy starts give your eyes an anchor on every line, so it's easier to focus, keep your place and glide through long text.</p>
+      <div class="hero__actions">
+        <a class="skb-btn skb-btn--primary hero__cta" href="#install">Install Skimbold</a>
+        <a class="skb-btn hero__cta" href="reader/reader.html">Open the Reader</a>
+      </div>
+      <p class="hero__note skb-muted">Free and open source. Works in Chrome, Edge, Brave and other Chromium browsers (version 122 or later), and in Firefox 140 or later (the addons.mozilla.org listing is on the way).</p>
+    </section>
+
+    <section class="demo wrap" aria-labelledby="demo-title" data-skimbold-skip>
+      <div class="sheet">
+        <div class="sheet__head">
+          <h2 class="sheet__title" id="demo-title">Try it on your own words</h2>
+          <div class="demo__controls">
+            <div class="skb-field demo__control">
+              <span class="skb-field__label" id="letters-label">Bold letters</span>
+              <div class="skb-seg" role="radiogroup" aria-labelledby="letters-label">
+                <input type="radio" name="letters" id="letters-auto" value="auto" checked>
+                <label for="letters-auto">Auto</label>
+                <input type="radio" name="letters" id="letters-1" value="1">
+                <label for="letters-1">1</label>
+                <input type="radio" name="letters" id="letters-2" value="2">
+                <label for="letters-2">2</label>
+                <input type="radio" name="letters" id="letters-3" value="3">
+                <label for="letters-3">3</label>
+              </div>
+            </div>
+            <div class="skb-field demo__control" id="strength-field">
+              <label class="skb-field__label" for="strength">Strength</label>
+              <output class="skb-field__value" for="strength" id="strength-value">3</output>
+              <input class="skb-range" type="range" id="strength" min="1" max="5" step="1" value="3">
+            </div>
+            <div class="skb-field demo__control">
+              <label class="skb-field__label" for="fade">Fade rest of word</label>
+              <output class="skb-field__value" for="fade" id="fade-value">0%</output>
+              <input class="skb-range" type="range" id="fade" min="0" max="60" step="5" value="0">
+            </div>
+          </div>
+        </div>
+        <div class="sheet__body">
+          <div class="demo__input">
+            <label class="demo__label" for="demo-text">Your text</label>
+            <textarea class="skb-input demo__textarea" id="demo-text" rows="9" spellcheck="false" aria-describedby="demo-source">To read well, that is, to read true books in a true spirit, is a noble exercise, and one that will task the reader more than any exercise which the customs of the day esteem. It requires a training such as the athletes underwent, the steady intention almost of the whole life to this object. Books must be read as deliberately and reservedly as they were written.</textarea>
+            <p class="demo__source skb-muted" id="demo-source">Sample from Henry David Thoreau, <cite>Walden</cite> (1854). Replace it with anything.</p>
+          </div>
+          <div class="demo__output">
+            <span class="demo__label" id="preview-label">With Skimbold</span>
+            <div class="demo__preview ruled" id="demo-preview" role="region" aria-labelledby="preview-label">
+              <noscript>The live preview needs JavaScript. Everything else on this page works without it.</noscript>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="how" aria-labelledby="how-title">
+      <h2 class="section__title" id="how-title">How it works</h2>
+      <ol class="steps">
+        <li class="steps__item">
+          <h3 class="steps__title">Turn it on</h3>
+          <p>Press <kbd class="skb-kbd">Alt</kbd> + <kbd class="skb-kbd">R</kbd> on any page, or click the Skimbold button in your toolbar. On a Mac the shortcut is <kbd class="skb-kbd">Control</kbd> + <kbd class="skb-kbd">Shift</kbd> + <kbd class="skb-kbd">R</kbd>.</p>
+        </li>
+        <li class="steps__item">
+          <h3 class="steps__title">Read</h3>
+          <p>The start of every word turns bold. Short words get one letter and longer words get more, and you can change how much in the toolbar panel.</p>
+        </li>
+        <li class="steps__item">
+          <h3 class="steps__title">Turn it off</h3>
+          <p>Press the shortcut again and the page goes back exactly as it was. Nothing on the site is saved or changed for anyone else.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section wrap" id="features" aria-labelledby="features-title">
+      <h2 class="section__title" id="features-title">Made for real reading</h2>
+      <ul class="features">
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c2 2.2 2.8 4.5 2.8 7s-.8 4.8-2.8 7c-2-2.2-2.8-4.5-2.8-7S8 5.2 10 3Z"/></svg>
+          <h3 class="feature__title">Works on almost any site</h3>
+          <p>News, docs, wikis, blogs and web apps. It leaves search boxes, editors, code and math alone, so sites keep working.</p>
+        </li>
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="15" height="10" rx="2"/><path d="M5.5 8h1M8.5 8h1M11.5 8h1M14.5 8h0M6.5 12h7"/></svg>
+          <h3 class="feature__title">One shortcut</h3>
+          <p><kbd class="skb-kbd">Alt</kbd> + <kbd class="skb-kbd">R</kbd> turns it on and off. You can pick a different shortcut in your browser's extension settings.</p>
+        </li>
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.2 4.3 5.9 3.8 3 4v11c2.9-.2 5.2.3 7 1.5 1.8-1.2 4.1-1.7 7-1.5V4c-2.9-.2-5.2.3-7 1.5Z"/><path d="M10 5.5v11"/></svg>
+          <h3 class="feature__title">A Reader for PDFs and pasted text</h3>
+          <p>Open a PDF, a text, Markdown or HTML file, or paste anything you copied. Choose a light, sepia or dark page, a serif or sans font, and your own size and width.</p>
+        </li>
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 8 14.5 16 5.5"/></svg>
+          <h3 class="feature__title">Always on where you want it</h3>
+          <p>Switch it on for good on the sites you read most, or everywhere with a few sites skipped. It asks for access to a site only when you choose this.</p>
+        </li>
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h9M15 6h2M3 14h3M9 14h8"/><circle cx="13.5" cy="6" r="1.8"/><circle cx="7.5" cy="14" r="1.8"/></svg>
+          <h3 class="feature__title">Tuned to your eyes</h3>
+          <p>Bold one, two or three letters, or let Auto scale with the length of each word. Set the strength and boldness, and fade the rest of each word if you like.</p>
+        </li>
+        <li class="feature">
+          <svg class="feature__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5 16 5v4.5c0 3.8-2.5 6.6-6 8-3.5-1.4-6-4.2-6-8V5l6-2.5Z"/><path d="M7.5 10 9.3 11.8 12.8 8.3"/></svg>
+          <h3 class="feature__title">Private by design</h3>
+          <p>No account, no ads, no analytics. Text is changed inside your browser and never sent anywhere. <a href="privacy.html">Read the privacy policy</a>.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section wrap" id="install" aria-labelledby="install-title">
+      <h2 class="section__title" id="install-title">Install</h2>
+      <p class="section__lead">Skimbold is free. Download the latest release from GitHub and add it to your browser in about a minute.</p>
+      <div class="install__stores">
+        <a class="skb-btn skb-btn--primary" href="https://github.com/loveislife767/skimbold/releases/latest">Download the latest release</a>
+      </div>
+      <div class="install">
+        <div class="install__block">
+          <h3 class="install__title">Chrome, Edge and Brave</h3>
+          <p>Version 122 or later, and other Chromium browsers too.</p>
+          <ol class="install__steps">
+            <li>From the release page, download <code>skimbold-&lt;version&gt;-chromium.zip</code> and unzip it into a folder you'll keep.</li>
+            <li>Open the extensions page: <code>chrome://extensions</code>, <code>edge://extensions</code> or <code>brave://extensions</code>. Type it into the address bar.</li>
+            <li>Switch on <strong>Developer mode</strong>. It's in the top-right corner in Chrome and Brave, and in the left sidebar in Edge.</li>
+            <li>Click <strong>Load unpacked</strong> and choose the unzipped folder, the one that contains <code>manifest.json</code>.</li>
+            <li>Pin Skimbold from the puzzle-piece menu so its button stays in your toolbar.</li>
+          </ol>
+          <p class="install__note skb-muted">To update, unzip the new release over the same folder and click the reload arrow on Skimbold's card.</p>
+        </div>
+        <div class="install__block">
+          <h3 class="install__title">Firefox</h3>
+          <p>The Firefox version is being prepared for addons.mozilla.org. To try it today:</p>
+          <ol class="install__steps">
+            <li>Download <code>skimbold-&lt;version&gt;-firefox.zip</code> from the release page.</li>
+            <li>Open <code>about:debugging#/runtime/this-firefox</code> and click <strong>Load Temporary Add-on</strong>.</li>
+            <li>Choose the zip file. Firefox removes temporary add-ons when it restarts.</li>
+          </ol>
+          <h3 class="install__title">No install at all</h3>
+          <p>The <a href="reader/reader.html">Skimbold Reader</a> runs right here in your browser. Paste text or open a file, and it stays on your device.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reader-band" aria-labelledby="reader-title">
+      <div class="wrap reader-band__inner">
+        <div>
+          <h2 class="reader-band__title" id="reader-title">Reading a PDF, or something you copied?</h2>
+          <p>The Skimbold Reader opens PDFs, text and web pages you saved, and sets them in a calm column with the same bold starts. It's built into the extension, and it works on the web too.</p>
+        </div>
+        <a class="skb-btn skb-btn--primary reader-band__cta" href="reader/reader.html">Open the Reader</a>
+      </div>
+    </section>
+
+    <section class="section wrap" id="open-source" aria-labelledby="oss-title">
+      <h2 class="section__title" id="oss-title">Open source, and free for good</h2>
+      <div class="oss">
+        <p>Skimbold is MIT licensed and built in the open. Read the code, suggest a change or report a problem on <a href="https://github.com/loveislife767/skimbold">GitHub</a>. There's no paid version and nothing to sign up for.</p>
+        <p class="skb-muted">PDF support uses <a href="https://mozilla.github.io/pdf.js/">pdf.js</a> by Mozilla, under the Apache License 2.0, included unmodified.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span class="skb-wordmark footer__mark"><b>Skim</b>bold</span>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="privacy.html">Privacy</a>
+        <a href="reader/reader.html">Reader</a>
+        <a href="https://github.com/loveislife767/skimbold">Source code</a>
+        <a href="https://github.com/loveislife767/skimbold/issues">Report a problem</a>
+        <a href="https://github.com/loveislife767/skimbold/blob/main/LICENSE">MIT License</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

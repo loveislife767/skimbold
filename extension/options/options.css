@@ -1,0 +1,231 @@
+/* Options page: sits on the shared theme (../shared/theme.css). */
+
+[hidden] {
+  display: none !important;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--skb-space-6) var(--skb-space-4) var(--skb-space-12);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--skb-space-4);
+  padding-bottom: var(--skb-space-4);
+  border-bottom: 1px solid var(--skb-line);
+}
+
+.top__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-3);
+  margin: 0;
+  font-size: var(--skb-text-2xl);
+  line-height: 1;
+}
+
+.title {
+  margin: var(--skb-space-8) 0 var(--skb-space-1);
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-3xl);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.lead {
+  margin: 0;
+}
+
+.section {
+  margin-top: var(--skb-space-8);
+}
+
+.section__title {
+  margin: 0 0 var(--skb-space-3);
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-2xl);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.stack {
+  display: grid;
+  gap: var(--skb-space-6);
+}
+
+/* Controls stretched across a wide card look sparse; the preview keeps the full width. */
+.fields > .skb-field {
+  max-width: 460px;
+}
+
+/* ── Preview ───────────────────────────────────────────────────────────── */
+
+.preview {
+  --preview-weight: 700;
+  --preview-fade: 0%;
+  margin: 0;
+  padding: var(--skb-space-4);
+  border-radius: var(--skb-radius-md);
+  background: var(--skb-paper);
+  color: color-mix(in srgb, var(--skb-ink) calc(100% - var(--preview-fade)), transparent);
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-xl);
+  line-height: var(--skb-leading-read);
+}
+
+.preview b {
+  color: var(--skb-ink);
+  font-weight: var(--preview-weight);
+}
+
+/* ── Shortcut ──────────────────────────────────────────────────────────── */
+
+.shortcut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--skb-space-3);
+}
+
+.shortcut__keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--skb-ink-soft);
+}
+
+.shortcut__keys:empty {
+  display: none;
+}
+
+/* ── Site lists ────────────────────────────────────────────────────────── */
+
+.sites {
+  display: grid;
+  gap: 6px;
+  padding-top: var(--skb-space-5);
+  border-top: 1px solid var(--skb-line);
+}
+
+.sites__title {
+  margin: 0;
+  font-size: var(--skb-text-md);
+  font-weight: 600;
+}
+
+.sites .skb-field__hint {
+  margin: 0;
+}
+
+.sites__list {
+  display: grid;
+  margin: var(--skb-space-1) 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--skb-line);
+  border-radius: var(--skb-radius-md);
+}
+
+.sites__list:empty {
+  display: none;
+}
+
+.sites__item {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-3);
+  min-height: 40px;
+  padding: var(--skb-space-1) var(--skb-space-1) var(--skb-space-1) var(--skb-space-3);
+}
+
+.sites__item + .sites__item {
+  border-top: 1px solid var(--skb-line);
+}
+
+.sites__host {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sites__status {
+  font-size: var(--skb-text-sm);
+}
+
+/* On a narrow window the status gets a line of its own, under the site and its buttons. */
+@media (max-width: 560px) {
+  .sites__item {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+
+  .sites__status {
+    order: 1;
+    flex-basis: 100%;
+    padding-bottom: var(--skb-space-1);
+  }
+}
+
+.sites__empty {
+  margin: var(--skb-space-1) 0 0;
+  font-size: var(--skb-text-sm);
+  font-style: italic;
+}
+
+/* Kept visible while Skimbold is on everywhere, but shown as set aside. */
+.sites--paused .sites__list {
+  opacity: 0.6;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+
+.reset__text,
+.reset__question {
+  margin: 0;
+}
+
+.reset__question {
+  font-weight: 600;
+}
+
+.reset__confirm {
+  display: grid;
+  gap: var(--skb-space-3);
+}
+
+.reset__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2);
+}
+
+.reset__status {
+  margin: 0;
+}
+
+.reset__status:empty {
+  display: none;
+}
+
+/* ── About ─────────────────────────────────────────────────────────────── */
+
+.about p {
+  margin: 0 0 var(--skb-space-2);
+}
+
+.about .skb-wordmark {
+  font-size: var(--skb-text-lg);
+}
+
+.about__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2) var(--skb-space-5);
+  margin: var(--skb-space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}

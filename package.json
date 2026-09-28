@@ -1,0 +1,29 @@
+{
+  "name": "skimbold",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free, open-source browser extension that bolds the start of every word so your eyes can glide through text.",
+  "author": "Simon Buhl",
+  "license": "MIT",
+  "homepage": "https://loveislife767.github.io/skimbold/",
+  "repository": { "type": "git", "url": "https://github.com/loveislife767/skimbold.git" },
+  "bugs": { "url": "https://github.com/loveislife767/skimbold/issues" },
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "test": "node --test \"test/unit/*.test.mjs\"",
+    "test:e2e": "playwright test",
+    "build": "node scripts/build.mjs",
+    "lint:firefox": "web-ext lint --source-dir dist/firefox",
+    "check:network": "node scripts/check-no-network.mjs",
+    "icons": "node scripts/icons.mjs",
+    "store-assets": "node scripts/store-assets.mjs",
+    "vendor:pdfjs": "node scripts/vendor-pdfjs.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "pdfjs-dist": "6.3.289",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "web-ext": "10.7.0"
+  }
+}

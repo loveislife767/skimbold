@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live chat</title>
+</head>
+<body>
+<p id="topic">Everyone is talking about the regatta in the harbour today.</p>
+<div id="chat"></div>
+<script>
+  // A live chat that keeps its last 40 messages, the way stream and live-video chats do: every
+  // new message is appended at the end, and once the list is full the oldest one is removed.
+  const WORDS = 'hello there everyone what a great race today nice sailing wow amazing finish'.split(' ');
+  let count = 0;
+  let timer = 0;
+  window.chatFixture = {
+    start(everyMs) {
+      timer = setInterval(() => {
+        const chat = document.getElementById('chat');
+        const message = document.createElement('div');
+        message.className = 'message';
+        message.textContent = `viewer${count}: ${WORDS.slice(count % 6, count % 6 + 7).join(' ')}`;
+        count++;
+        chat.appendChild(message);
+        if (chat.children.length > 40) chat.firstElementChild.remove();
+      }, everyMs);
+    },
+    stop() {
+      clearInterval(timer);
+    },
+  };
+</script>
+</body>
+</html>

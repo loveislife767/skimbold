@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skimbold</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <img src="../icons/icon.svg" width="24" height="24" alt="">
+    <h1 class="head__name"><span class="skb-wordmark"><b>Skim</b>bold</span></h1>
+    <a class="skb-btn skb-btn--ghost skb-btn--small" href="../reader/reader.html" target="_blank">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.2 4.3 5.9 3.8 3 4v11c2.9-.2 5.2.3 7 1.5 1.8-1.2 4.1-1.7 7-1.5V4c-2.9-.2-5.2.3-7 1.5Z"/><path d="M10 5.5v11"/></svg>
+      Reader
+    </a>
+  </header>
+
+  <main class="main">
+    <section class="page" aria-label="This page">
+      <button class="skb-btn skb-btn--primary page__toggle" type="button" id="toggle" data-active="false">
+        <span class="page__dot" aria-hidden="true"></span>
+        <span id="toggle-text">Turn on for this page</span>
+      </button>
+      <button class="skb-btn skb-btn--primary page__pdf" type="button" id="open-pdf" hidden>
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.2 4.3 5.9 3.8 3 4v11c2.9-.2 5.2.3 7 1.5 1.8-1.2 4.1-1.7 7-1.5V4c-2.9-.2-5.2.3-7 1.5Z"/><path d="M10 5.5v11"/></svg>
+        Open this PDF in Reader
+      </button>
+      <p class="skb-notice" id="notice" hidden></p>
+      <p class="shortcut" id="shortcut"></p>
+      <p class="skb-sr-only" id="announce" role="status"></p>
+    </section>
+
+    <p class="preview" id="preview"><span class="skb-sr-only">Preview: </span><span id="preview-text"></span></p>
+
+    <div class="skb-field">
+      <span class="skb-field__label" id="letters-label">Bold letters</span>
+      <div class="skb-seg" role="radiogroup" aria-labelledby="letters-label" id="letters">
+        <input type="radio" name="letters" id="letters-auto" value="auto">
+        <label for="letters-auto">Auto</label>
+        <input type="radio" name="letters" id="letters-1" value="1">
+        <label for="letters-1">1</label>
+        <input type="radio" name="letters" id="letters-2" value="2">
+        <label for="letters-2">2</label>
+        <input type="radio" name="letters" id="letters-3" value="3">
+        <label for="letters-3">3</label>
+      </div>
+    </div>
+
+    <div class="skb-field" id="strength-field">
+      <label class="skb-field__label" for="strength">Strength</label>
+      <output class="skb-field__value" for="strength" id="strength-value">3</output>
+      <input class="skb-range" type="range" id="strength" min="1" max="5" step="1" value="3">
+    </div>
+
+    <div class="skb-field">
+      <label class="skb-field__label" for="fade">Fade rest of word</label>
+      <output class="skb-field__value" for="fade" id="fade-value">Off</output>
+      <input class="skb-range" type="range" id="fade" min="0" max="60" step="5" value="0">
+    </div>
+
+    <div class="skb-field">
+      <span class="skb-field__label" id="weight-label">Boldness</span>
+      <div class="skb-seg" role="radiogroup" aria-labelledby="weight-label" id="weight">
+        <input type="radio" name="weight" id="weight-600" value="600">
+        <label for="weight-600" style="font-weight:600">Semi</label>
+        <input type="radio" name="weight" id="weight-700" value="700">
+        <label for="weight-700" style="font-weight:700">Bold</label>
+        <input type="radio" name="weight" id="weight-800" value="800">
+        <label for="weight-800" style="font-weight:800">Heavy</label>
+        <input type="radio" name="weight" id="weight-900" value="900">
+        <label for="weight-900" style="font-weight:900">Black</label>
+      </div>
+    </div>
+
+    <label class="skb-switch site" id="site-row" data-pending="true">
+      <span id="site-text">Always on for this site</span>
+      <input type="checkbox" role="switch" id="site">
+    </label>
+  </main>
+
+  <nav class="foot" aria-label="More">
+    <button class="skb-btn skb-btn--ghost skb-btn--small" type="button" id="open-settings">Settings</button>
+    <a class="skb-btn skb-btn--ghost skb-btn--small" href="../reader/reader.html" target="_blank">Reader</a>
+    <a class="skb-btn skb-btn--ghost skb-btn--small" href="https://github.com/loveislife767/skimbold" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

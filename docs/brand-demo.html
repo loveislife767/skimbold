@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skimbold design system</title>
+  <link rel="icon" href="../extension/icons/icon-32.png">
+  <link rel="stylesheet" href="../extension/shared/theme.css">
+  <style>
+    .demo {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: var(--skb-space-8) var(--skb-space-4) var(--skb-space-12);
+    }
+
+    .demo-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--skb-space-4);
+      padding-bottom: var(--skb-space-6);
+      border-bottom: 1px solid var(--skb-line);
+    }
+
+    .demo-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--skb-space-3);
+      margin: 0;
+      font-size: var(--skb-text-4xl);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .demo-brand img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .demo-theme {
+      width: 300px;
+      max-width: 100%;
+    }
+
+    .demo h2 {
+      margin: var(--skb-space-10) 0 var(--skb-space-4);
+      font-family: var(--skb-font-read);
+      font-size: var(--skb-text-2xl);
+      font-weight: 700;
+    }
+
+    .demo h3 {
+      margin: 0 0 var(--skb-space-3);
+      font-size: var(--skb-text-md);
+      font-weight: 600;
+      color: var(--skb-ink-soft);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--skb-space-4);
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--skb-space-2);
+    }
+
+    .demo-stack {
+      display: grid;
+      align-content: start;
+      gap: var(--skb-space-5);
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: var(--skb-space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .swatch {
+      overflow: hidden;
+      border: 1px solid var(--skb-line);
+      border-radius: var(--skb-radius-md);
+      background: var(--skb-surface);
+      font-size: var(--skb-text-xs);
+    }
+
+    .swatch span {
+      display: block;
+      height: 44px;
+      border-bottom: 1px solid var(--skb-line);
+    }
+
+    .swatch code {
+      display: block;
+      padding: 6px 8px 0;
+      font: inherit;
+      font-weight: 600;
+    }
+
+    .swatch output {
+      display: block;
+      padding: 0 8px 6px;
+      color: var(--skb-ink-soft);
+    }
+
+    .reading {
+      max-width: 38em;
+      margin: 0;
+      font-family: var(--skb-font-read);
+      font-size: var(--skb-text-xl);
+      line-height: var(--skb-leading-read);
+    }
+
+    .reading b {
+      font-weight: 700;
+    }
+
+    .scale p {
+      margin: 0 0 var(--skb-space-2);
+    }
+
+    .icons {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--skb-space-6);
+    }
+
+    .icons figure {
+      margin: 0;
+      text-align: center;
+      font-size: var(--skb-text-xs);
+      color: var(--skb-ink-soft);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: var(--skb-radius-sm);
+    }
+
+    .toolbar i {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      opacity: 0.55;
+    }
+
+    /* A popup-sized card showing the components working together. */
+    .popup {
+      width: 340px;
+      max-width: 100%;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: var(--skb-shadow-2);
+    }
+
+    .popup-head {
+      display: flex;
+      align-items: center;
+      gap: var(--skb-space-2);
+      padding: var(--skb-space-3) var(--skb-space-3) var(--skb-space-3) var(--skb-space-4);
+      border-bottom: 1px solid var(--skb-line);
+    }
+
+    .popup-head img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .popup-head .skb-wordmark {
+      flex: 1;
+      font-size: var(--skb-text-xl);
+    }
+
+    .popup-body {
+      display: grid;
+      gap: var(--skb-space-4);
+      padding: var(--skb-space-4);
+    }
+
+    .popup-body > .skb-btn {
+      width: 100%;
+    }
+
+    .preview {
+      margin: 0;
+      padding: var(--skb-space-3);
+      border-radius: var(--skb-radius-sm);
+      background: var(--skb-paper);
+      font-family: var(--skb-font-read);
+      font-size: var(--skb-text-lg);
+      line-height: 1.5;
+    }
+
+    .popup-foot {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--skb-space-2) var(--skb-space-3);
+      border-top: 1px solid var(--skb-line);
+    }
+  </style>
+</head>
+<body>
+  <main class="demo">
+    <header class="demo-head">
+      <h1 class="demo-brand">
+        <img src="../extension/icons/icon.svg" alt="">
+        <span class="skb-wordmark"><b>Skim</b>bold</span>
+      </h1>
+      <div class="skb-field demo-theme">
+        <span class="skb-field__label" id="theme-label">Theme</span>
+        <div class="skb-seg" role="radiogroup" aria-labelledby="theme-label">
+          <input type="radio" name="theme" id="theme-auto" value="auto" checked>
+          <label for="theme-auto">Auto</label>
+          <input type="radio" name="theme" id="theme-light" value="light">
+          <label for="theme-light">Light</label>
+          <input type="radio" name="theme" id="theme-sepia" value="sepia">
+          <label for="theme-sepia">Sepia</label>
+          <input type="radio" name="theme" id="theme-dark" value="dark">
+          <label for="theme-dark">Dark</label>
+        </div>
+      </div>
+    </header>
+
+    <h2>In context</h2>
+    <div class="demo-grid">
+      <section class="skb-card popup" aria-label="Popup example">
+        <div class="popup-head">
+          <img src="../extension/icons/icon.svg" alt="">
+          <span class="skb-wordmark"><b>Skim</b>bold</span>
+          <button class="skb-btn skb-btn--ghost skb-btn--small" type="button">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.2 4.3 5.9 3.8 3 4v11c2.9-.2 5.2.3 7 1.5 1.8-1.2 4.1-1.7 7-1.5V4c-2.9-.2-5.2.3-7 1.5Z"/><path d="M10 5.5v11"/></svg>
+            Reader
+          </button>
+        </div>
+        <div class="popup-body">
+          <button class="skb-btn skb-btn--primary" type="button">Turn on for this page</button>
+          <p class="skb-muted" style="margin:-8px 0 0;font-size:var(--skb-text-sm);text-align:center">
+            Shortcut <kbd class="skb-kbd">Alt</kbd> + <kbd class="skb-kbd">R</kbd>
+          </p>
+          <p class="preview"><b>Sk</b>im <b>t</b>he <b>st</b>art <b>o</b>f <b>ev</b>ery <b>wo</b>rd <b>a</b>nd <b>yo</b>ur <b>ey</b>es <b>kn</b>ow <b>wh</b>ere <b>t</b>o <b>la</b>nd.</p>
+          <div class="skb-field">
+            <span class="skb-field__label" id="p-letters">Bold letters</span>
+            <div class="skb-seg" role="radiogroup" aria-labelledby="p-letters">
+              <input type="radio" name="p-letters" id="p-letters-auto" value="auto" checked>
+              <label for="p-letters-auto">Auto</label>
+              <input type="radio" name="p-letters" id="p-letters-1" value="1">
+              <label for="p-letters-1">1</label>
+              <input type="radio" name="p-letters" id="p-letters-2" value="2">
+              <label for="p-letters-2">2</label>
+              <input type="radio" name="p-letters" id="p-letters-3" value="3">
+              <label for="p-letters-3">3</label>
+            </div>
+          </div>
+          <div class="skb-field">
+            <label class="skb-field__label" for="p-fade">Fade rest of word</label>
+            <output class="skb-field__value" for="p-fade">20%</output>
+            <input class="skb-range" type="range" id="p-fade" min="0" max="60" step="5" value="20" data-unit="%">
+          </div>
+          <label class="skb-switch">
+            <span>Always on for en.wikipedia.org</span>
+            <input type="checkbox" role="switch">
+          </label>
+        </div>
+        <nav class="popup-foot" aria-label="Popup links">
+          <a class="skb-btn skb-btn--ghost skb-btn--small" href="#settings">Settings</a>
+          <a class="skb-btn skb-btn--ghost skb-btn--small" href="#reader">Reader</a>
+          <a class="skb-btn skb-btn--ghost skb-btn--small" href="#github">GitHub</a>
+        </nav>
+      </section>
+
+      <section class="demo-stack" aria-label="Reading sample">
+        <p class="reading"><b>Ski</b>mbold <b>se</b>ts <b>t</b>he <b>st</b>art <b>o</b>f <b>ev</b>ery <b>wo</b>rd <b>i</b>n <b>bo</b>ld, <b>s</b>o <b>yo</b>ur <b>ey</b>es <b>ha</b>ve <b>some</b>where <b>t</b>o <b>la</b>nd <b>a</b>nd <b>i</b>t <b>i</b>s <b>ea</b>sier <b>t</b>o <b>ke</b>ep <b>yo</b>ur <b>pl</b>ace.</p>
+        <p class="skb-notice">Browsers don’t let extensions change this page. Open a regular website to use Skimbold.</p>
+        <p class="skb-notice skb-notice--danger">This PDF has no selectable text. It may be a scan.</p>
+      </section>
+    </div>
+
+    <h2>Colour</h2>
+    <ul class="swatches" id="swatches"></ul>
+
+    <h2>Type</h2>
+    <div class="demo-grid">
+      <div class="scale">
+        <h3>Interface: system-ui</h3>
+        <p style="font-size:var(--skb-text-3xl);font-weight:600">Turn on for this page</p>
+        <p style="font-size:var(--skb-text-lg)">Fade rest of word</p>
+        <p style="font-size:var(--skb-text-md)">Bold letters, strength and boldness apply live.</p>
+        <p class="skb-muted" style="font-size:var(--skb-text-sm)">Dims the letters after the bold part.</p>
+      </div>
+      <div class="scale" style="font-family:var(--skb-font-read)">
+        <h3 style="font-family:var(--skb-font-ui)">Reading: Charter, Sitka Text, Cambria, Georgia</h3>
+        <p style="font-size:var(--skb-text-3xl);font-weight:700">A quiet page to read on</p>
+        <p style="font-size:var(--skb-text-xl);line-height:var(--skb-leading-read)"><b>Pa</b>ste <b>te</b>xt <b>o</b>r <b>op</b>en <b>a</b> <b>fi</b>le, <b>th</b>en <b>re</b>ad <b>a</b>t <b>yo</b>ur <b>o</b>wn <b>pa</b>ce.</p>
+      </div>
+    </div>
+
+    <h2>Buttons</h2>
+    <div class="demo-stack">
+      <div class="demo-row">
+        <button class="skb-btn skb-btn--primary" type="button">Open Reader</button>
+        <button class="skb-btn" type="button">Paste text</button>
+        <button class="skb-btn skb-btn--ghost" type="button">Cancel</button>
+        <button class="skb-btn skb-btn--danger" type="button">Reset to defaults</button>
+        <button class="skb-btn skb-btn--primary" type="button" disabled>Turn on for this page</button>
+        <button class="skb-btn" type="button" disabled>Disabled</button>
+      </div>
+      <div class="demo-row">
+        <button class="skb-btn skb-btn--primary skb-btn--small" type="button">Save</button>
+        <button class="skb-btn skb-btn--small" type="button">Set a shortcut</button>
+        <button class="skb-btn skb-btn--ghost skb-btn--small" type="button">Remove</button>
+        <button class="skb-btn skb-btn--icon" type="button" aria-label="Smaller text">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"/></svg>
+        </button>
+        <button class="skb-btn skb-btn--icon" type="button" aria-label="Larger text">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10M10 5v10"/></svg>
+        </button>
+        <button class="skb-btn skb-btn--icon skb-btn--small skb-btn--ghost" type="button" aria-label="Remove en.wikipedia.org">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <h2>Controls</h2>
+    <div class="demo-grid">
+      <div class="skb-card demo-stack">
+        <div class="skb-field">
+          <span class="skb-field__label" id="d-weight">Boldness</span>
+          <div class="skb-seg" role="radiogroup" aria-labelledby="d-weight">
+            <input type="radio" name="d-weight" id="d-weight-600" value="600">
+            <label for="d-weight-600">Semi</label>
+            <input type="radio" name="d-weight" id="d-weight-700" value="700" checked>
+            <label for="d-weight-700">Bold</label>
+            <input type="radio" name="d-weight" id="d-weight-800" value="800">
+            <label for="d-weight-800">Heavy</label>
+            <input type="radio" name="d-weight" id="d-weight-900" value="900">
+            <label for="d-weight-900">Black</label>
+          </div>
+        </div>
+        <div class="skb-field">
+          <label class="skb-field__label" for="d-strength">Strength</label>
+          <output class="skb-field__value" for="d-strength">3</output>
+          <input class="skb-range" type="range" id="d-strength" min="1" max="5" step="1" value="3" aria-describedby="d-strength-hint">
+          <p class="skb-field__hint" id="d-strength-hint">How much of each word is bold in Auto mode.</p>
+        </div>
+        <div class="skb-field">
+          <span class="skb-field__label" id="d-skip">Skip short words</span>
+          <div class="skb-seg" role="radiogroup" aria-labelledby="d-skip">
+            <input type="radio" name="d-skip" id="d-skip-0" value="0" checked>
+            <label for="d-skip-0">Off</label>
+            <input type="radio" name="d-skip" id="d-skip-1" value="1">
+            <label for="d-skip-1">1</label>
+            <input type="radio" name="d-skip" id="d-skip-2" value="2">
+            <label for="d-skip-2">2</label>
+            <input type="radio" name="d-skip" id="d-skip-3" value="3" disabled>
+            <label for="d-skip-3">3</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="skb-card demo-stack">
+        <label class="skb-switch">
+          <input type="checkbox" role="switch" checked>
+          <span>Bold</span>
+        </label>
+        <label class="skb-switch">
+          <span>Always on everywhere</span>
+          <input type="checkbox" role="switch">
+        </label>
+        <label class="skb-switch">
+          <span>Unavailable here</span>
+          <input type="checkbox" role="switch" disabled>
+        </label>
+        <div class="skb-field">
+          <label class="skb-field__label" for="d-click">Clicking the toolbar icon</label>
+          <select class="skb-select" id="d-click">
+            <option value="popup">Opens this panel</option>
+            <option value="toggle">Turns Skimbold on or off</option>
+          </select>
+        </div>
+        <div class="skb-field">
+          <label class="skb-field__label" for="d-url">Skip this site</label>
+          <input class="skb-input" type="url" id="d-url" placeholder="https://example.com" aria-describedby="d-url-hint">
+          <p class="skb-field__hint" id="d-url-hint">Skimbold stays off here even when it’s on everywhere.</p>
+        </div>
+      </div>
+
+      <div class="skb-card demo-stack">
+        <h3 style="margin:0">Keyboard</h3>
+        <p style="margin:0">Toggle the page with <kbd class="skb-kbd">Alt</kbd> + <kbd class="skb-kbd">R</kbd>, or on a Mac <kbd class="skb-kbd">Ctrl</kbd> + <kbd class="skb-kbd">Shift</kbd> + <kbd class="skb-kbd">R</kbd>.</p>
+        <p class="skb-muted" style="margin:0">Muted text carries secondary detail, like where a setting is stored or what a shortcut conflicts with.</p>
+        <p style="margin:0">Links look like <a href="#links">this privacy policy</a>.</p>
+      </div>
+    </div>
+
+    <h2>Icon</h2>
+    <div class="icons">
+      <figure><img src="../extension/icons/icon-16.png" width="16" height="16" alt="Icon at 16 pixels"><figcaption>16</figcaption></figure>
+      <figure><img src="../extension/icons/icon-32.png" width="32" height="32" alt="Icon at 32 pixels"><figcaption>32</figcaption></figure>
+      <figure><img src="../extension/icons/icon-48.png" width="48" height="48" alt="Icon at 48 pixels"><figcaption>48</figcaption></figure>
+      <figure><img src="../extension/icons/icon-128.png" width="128" height="128" alt="Icon at 128 pixels"><figcaption>128, store padding</figcaption></figure>
+      <figure>
+        <div class="toolbar" style="background:#FFFFFF"><i style="background:#5F6368"></i><i style="background:#5F6368"></i><img src="../extension/icons/icon-16.png" width="16" height="16" alt=""><i style="background:#5F6368"></i></div>
+        <div class="toolbar" style="background:#35363A;margin-top:6px"><i style="background:#C4C7C5"></i><i style="background:#C4C7C5"></i><img src="../extension/icons/icon-16.png" width="16" height="16" alt=""><i style="background:#C4C7C5"></i></div>
+        <figcaption>In a light and a dark toolbar</figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+
+    for (const input of document.querySelectorAll('input[name="theme"]')) {
+      input.addEventListener('change', () => {
+        if (input.value === 'auto') delete root.dataset.theme;
+        else root.dataset.theme = input.value;
+        paintSwatches();
+      });
+    }
+
+    // Chromium needs the filled share of the track in --skb-fill; see docs/brand.md.
+    function syncRange(range) {
+      const pct = ((range.value - range.min) / (range.max - range.min)) * 100;
+      range.style.setProperty('--skb-fill', pct + '%');
+      const out = document.querySelector(`output[for="${range.id}"]`);
+      if (out) out.textContent = range.value + (range.dataset.unit || '');
+    }
+    for (const range of document.querySelectorAll('.skb-range')) {
+      syncRange(range);
+      range.addEventListener('input', () => syncRange(range));
+    }
+
+    const TOKENS = ['paper', 'surface', 'surface-sunk', 'ink', 'ink-soft', 'line', 'line-strong',
+      'accent', 'on-accent', 'accent-ink', 'accent-tint', 'focus', 'danger', 'danger-tint'];
+    const list = document.getElementById('swatches');
+    for (const name of TOKENS) {
+      const li = document.createElement('li');
+      li.className = 'swatch';
+      const chip = document.createElement('span');
+      chip.style.background = `var(--skb-${name})`;
+      const code = document.createElement('code');
+      code.textContent = `--skb-${name}`;
+      const value = document.createElement('output');
+      value.dataset.token = name;
+      li.append(chip, code, value);
+      list.append(li);
+    }
+    function paintSwatches() {
+      const styles = getComputedStyle(root);
+      for (const out of list.querySelectorAll('output')) {
+        out.textContent = styles.getPropertyValue(`--skb-${out.dataset.token}`).trim();
+      }
+    }
+    paintSwatches();
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintSwatches);
+  </script>
+</body>
+</html>

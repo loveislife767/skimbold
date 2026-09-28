@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Server-rendered React app</title>
+<script src="/vendor/react/umd/react.production.min.js" defer></script>
+<script src="/vendor/react-dom/umd/react-dom.production.min.js" defer></script>
+<script src="/engine/hydrate.js" defer></script>
+</head>
+<body>
+<!-- React 18 renderToString output for the App in hydrate.js; the app hydrates it on load, the
+     way server-rendered apps do once their scripts have arrived. -->
+<div id="root"><main id="app"><h1>Hydrated article</h1><p id="lede">Server rendered words that the client takes over.</p><p id="count">You clicked <!-- -->0<!-- --> times</p><button id="click">Click me</button></main></div>
+<!-- An Astro island waiting to hydrate; Astro removes the ssr attribute once it has. -->
+<astro-island ssr uid="island-1"><p id="island">Island words that hydrate on their own time</p></astro-island>
+<img src="/engine/held.gif" alt="" width="1" height="1">
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skip zones</title>
+</head>
+<body>
+<main id="page">
+  <p id="plain">Plain paragraph words that the engine should bold.</p>
+  <div id="not-editable" contenteditable="false"><p>Explicitly non-editable words are ordinary text.</p></div>
+
+  <div id="with-input"><label>Search <input class="zone" id="field" value="Input value words stay"></label></div>
+  <div class="zone" id="z-textarea"><textarea id="area">Textarea words stay untouched</textarea></div>
+  <div class="zone" id="z-editable"><div id="editor" contenteditable="true"><p>Editable words stay plain</p></div></div>
+  <div class="zone" id="z-plaintext"><div contenteditable="plaintext-only">Plaintext editor words</div></div>
+  <div class="zone" id="z-textbox"><div role="textbox">Role textbox words stay</div></div>
+  <p>Run <code class="zone" id="z-code">npm install words</code> first.</p>
+  <div class="zone" id="z-pre"><pre>Preformatted words stay
+    with their indentation</pre></div>
+  <p>Press <kbd class="zone" id="z-kbd">Control Shift Tab</kbd> or <samp class="zone" id="z-samp">Sample output words</samp> or <var class="zone" id="z-var">variable</var> or <tt class="zone" id="z-tt">teletype words</tt>.</p>
+  <div class="zone" id="z-svg"><svg width="200" height="20" viewBox="0 0 200 20"><text x="0" y="15">Vector words stay</text></svg></div>
+  <div class="zone" id="z-math"><math><mi>alpha</mi><mo>+</mo><mi>beta</mi></math></div>
+  <div class="zone" id="z-monaco"><div class="monaco-editor"><div class="view-lines"><div class="view-line"><span>Monaco editor words</span></div></div></div></div>
+  <div class="zone" id="z-codemirror"><div class="cm-editor"><div class="cm-content"><div class="cm-line">CodeMirror words</div></div></div><div class="CodeMirror"><span>Legacy CodeMirror words</span></div></div>
+  <div class="zone" id="z-terminal"><div class="xterm"><span>Terminal words</span></div><div class="ace_editor"><span>Ace words</span></div></div>
+  <div class="zone" id="z-mathjax"><mjx-container class="MathJax"><mjx-math>Math container words</mjx-math></mjx-container><span class="katex">Katex words here</span></div>
+  <!-- MathJax 2: the fast preview it shows first, then its CommonHTML and PreviewHTML output. -->
+  <p>Preview <span class="MathJax_Preview zone" id="z-mj-preview" style="color: inherit;"><span class="MJXp-math" id="MJXp-Span-1"><span class="MJXp-mi" id="MJXp-Span-2">lim</span><span class="MJXp-mi MJXp-italic" id="MJXp-Span-3">k</span></span></span><script type="math/tex" id="MathJax-Element-1">\lim k</script> then <span class="mjx-chtml MathJax_CHTML zone" id="z-mj-chtml" tabindex="0"><span id="MJXc-Node-1" class="mjx-math" aria-hidden="true"><span id="MJXc-Node-2" class="mjx-mrow"><span id="MJXc-Node-3" class="mjx-mi"><span class="mjx-char MJXc-TeX-main-R">sin</span></span><span id="MJXc-Node-4" class="mjx-mi"><span class="mjx-char MJXc-TeX-math-I">x</span></span></span></span></span> or <span class="MathJax_PHTML zone" id="z-mj-phtml" tabindex="0"><span class="MJXp-math" id="MJXp-Span-4"><span class="MJXp-mi" id="MJXp-Span-5">log</span><span class="MJXp-mi MJXp-italic" id="MJXp-Span-6">y</span></span></span></p>
+  <!-- Captions of YouTube, video.js, JW Player (old and new), Plyr, Shaka and Bitmovin. -->
+  <div class="zone" id="z-captions">
+    <div class="ytp-caption-window-container" id="ytp-caption-window-container"><div class="caption-window ytp-caption-window-bottom" style="width: 392px;"><span class="captions-text"><span class="caption-visual-line"><span class="ytp-caption-segment">Good morning. How are you?</span></span></span></div></div>
+    <div class="vjs-text-track-display" aria-live="off" aria-atomic="true"><div><div class="vjs-text-track-cue"><div>Waves break against the harbour wall</div></div></div></div>
+    <div class="jw-captions jw-reset"><div class="jw-captions-window jw-reset"><span class="jw-captions-text jw-reset">Boats return before the storm</span></div></div>
+    <div class="jw-text-track-container"><div class="jw-text-track-display"><div class="jw-text-track-cue">Boats return before the storm</div></div></div>
+    <div class="plyr__captions" dir="auto"><span class="plyr__caption">Gulls circle over the market</span></div>
+    <div class="shaka-text-container"><div><span>Evening falls over the pier</span></div></div>
+    <div class="bmpui-ui-subtitle-overlay"><div class="bmpui-ui-subtitle-label"><span>Tides turn near the jetty</span></div></div>
+  </div>
+  <div class="zone" id="z-tex"><p>Euler wrote $\alpha + \beta$ in his notebook</p><p>Inline \(x^2\) looks like TeX too</p><p>Display $$E = mc^2$$ as well</p></div>
+  <div class="zone" id="z-optout" data-skimbold-skip><p>Opted out words stay <em>plain</em></p></div>
+  <div class="zone" id="z-button"><button type="button">Button label words</button><select><option>Option words here</option></select></div>
+</main>
+</body>
+</html>

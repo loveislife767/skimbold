@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A frame that keeps reloading</title>
+</head>
+<body>
+<p id="top-text">Words at the top of a page whose ad slot reloads all the time.</p>
+<iframe src="/engine/frame-child.html?1" title="Frame 1" width="300" height="80"></iframe>
+<iframe src="/engine/frame-child.html?2" title="Frame 2" width="300" height="80"></iframe>
+<iframe src="/engine/frame-child.html?3" title="Frame 3" width="300" height="80"></iframe>
+<iframe src="/engine/frame-child.html?4" title="Frame 4" width="300" height="80"></iframe>
+<!-- An ad slot or live widget: the page points it at a new page every few hundred milliseconds. -->
+<iframe id="slot" src="/engine/frame-child.html?slot" title="Slot" width="300" height="80"></iframe>
+<script>
+  let timer = 0;
+  window.reloads = 0;
+  window.slotFixture = {
+    start(everyMs) {
+      timer = setInterval(() => { document.getElementById('slot').src = `/engine/frame-child.html?slot${++window.reloads}`; }, everyMs);
+    },
+    stop() {
+      clearInterval(timer);
+    },
+  };
+</script>
+</body>
+</html>

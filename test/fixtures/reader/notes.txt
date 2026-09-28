@@ -1,0 +1,21 @@
+The Keeper's Notes
+
+These notes were typed on an old machine that wrapped every line at about
+seventy characters, so each paragraph arrives broken into several short
+lines that belong together. The Reader should join them back into one
+flowing paragraph without losing a single word.
+
+A word split at the end of a line, like the word lamp-
+lighter here, should come back together. A name such as Anne-
+Marie keeps its hyphen.
+
+Things to pack for the night watch:
+- a flask of tea
+- two spare wicks
+- the logbook and a pencil
+
+The sea is calm tonight,
+The tide is full, the moon lies fair
+Upon the straits.
+
+Last paragraph of the notes.

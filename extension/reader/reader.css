@@ -1,0 +1,885 @@
+/*
+ * Skimbold Reader. Tokens and components come from ../shared/theme.css; the
+ * reading variables below are set by reader.js from the reader settings.
+ */
+
+:root {
+  --rd-size: 20px;
+  --rd-leading: 1.7;
+  --rd-measure: 680px;
+  --rd-font: var(--skb-font-read);
+  --rd-weight: 700;
+  --rd-rest: 100%;
+  --rd-bar-h: 56px;
+  --rd-gutter: max(var(--skb-space-4), env(safe-area-inset-left), env(safe-area-inset-right));
+  scroll-padding-top: calc(var(--rd-bar-h) + var(--skb-space-4));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ── Skip link ──────────────────────────────────────────────────────────── */
+
+.rd-skip {
+  position: absolute;
+  top: -60px;
+  left: var(--skb-space-3);
+  z-index: 30;
+}
+
+.rd-skip:focus {
+  top: var(--skb-space-2);
+}
+
+/* ── Top bar ────────────────────────────────────────────────────────────── */
+
+.rd-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid transparent;
+  background: color-mix(in srgb, var(--skb-paper) 90%, transparent);
+  -webkit-backdrop-filter: saturate(1.3) blur(12px);
+  backdrop-filter: saturate(1.3) blur(12px);
+  transition: border-color var(--skb-dur) var(--skb-ease);
+}
+
+.rd-bar.is-scrolled {
+  border-bottom-color: var(--skb-line);
+}
+
+.rd-bar__row {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-2);
+  height: var(--rd-bar-h);
+  padding: 0 var(--rd-gutter);
+}
+
+.rd-brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--skb-space-2);
+  min-height: 40px;
+  margin-left: -6px;
+  padding: 0 var(--skb-space-2) 0 6px;
+  border: 0;
+  border-radius: var(--skb-radius-md);
+  background: none;
+  color: var(--skb-ink);
+  cursor: pointer;
+  transition: background-color var(--skb-dur) var(--skb-ease);
+}
+
+.rd-brand:hover {
+  background: var(--skb-surface-sunk);
+}
+
+.rd-brand img {
+  display: block;
+  border-radius: 7px;
+}
+
+.rd-brand__name {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.rd-brand__sub {
+  padding-left: var(--skb-space-2);
+  border-left: 1px solid var(--skb-line-strong);
+  color: var(--skb-ink-soft);
+  font: 500 var(--skb-text-sm) / 1 var(--skb-font-ui);
+}
+
+.rd-bar__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0 var(--skb-space-4);
+  overflow: hidden;
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rd-bar__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--skb-space-1);
+  margin-left: auto;
+}
+
+.rd-tool {
+  padding: 0 var(--skb-space-3);
+}
+
+.rd-bar__sep {
+  width: 1px;
+  height: 22px;
+  margin: 0 var(--skb-space-2);
+  background: var(--skb-line);
+}
+
+.rd-bold {
+  gap: var(--skb-space-2);
+  min-height: 36px;
+  padding: 0 var(--skb-space-2);
+  border-radius: var(--skb-radius-md);
+  font-weight: 600;
+}
+
+.rd-bold:has(> input:focus-visible) {
+  outline: 2px solid var(--skb-focus);
+  outline-offset: 0;
+}
+
+.rd-bold > input:focus-visible {
+  outline: none;
+}
+
+.rd-aa {
+  font: 600 18px / 1 var(--skb-font-read);
+  letter-spacing: -0.02em;
+}
+
+.rd-aa[aria-expanded="true"] {
+  background: var(--skb-surface-sunk);
+}
+
+/* Loading progress along the bottom edge of the bar. */
+.rd-progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rd-progress__fill {
+  width: 0;
+  height: 100%;
+  background: var(--skb-accent);
+  transition: width var(--skb-dur) linear;
+}
+
+.rd-progress.is-busy .rd-progress__fill {
+  width: 30%;
+  animation: rd-busy 1.1s var(--skb-ease) infinite;
+}
+
+@keyframes rd-busy {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(340%); }
+}
+
+/* Without motion, a steady half-strength bar says "working". */
+@media (prefers-reduced-motion: reduce) {
+  .rd-progress.is-busy .rd-progress__fill {
+    width: 100%;
+    opacity: 0.5;
+    animation: none;
+  }
+}
+
+.rd-main:focus {
+  outline: none;
+}
+
+/* ── Text and display panel ─────────────────────────────────────────────── */
+
+.rd-panel {
+  position: fixed;
+  inset: calc(var(--rd-bar-h) + 6px) max(var(--skb-space-3), env(safe-area-inset-right)) auto auto;
+  width: min(360px, calc(100vw - 2 * var(--skb-space-3)));
+  max-height: calc(100dvh - var(--rd-bar-h) - var(--skb-space-5));
+  margin: 0;
+  padding: var(--skb-space-4) var(--skb-space-5) var(--skb-space-5);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--skb-line);
+  border-radius: var(--skb-radius-lg);
+  background: var(--skb-surface);
+  color: var(--skb-ink);
+  box-shadow: var(--skb-shadow-2);
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--skb-dur) var(--skb-ease),
+    transform var(--skb-dur) var(--skb-ease),
+    overlay var(--skb-dur) allow-discrete,
+    display var(--skb-dur) allow-discrete;
+}
+
+.rd-panel:not(:popover-open) {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+@starting-style {
+  .rd-panel:popover-open {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.rd-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 -6px var(--skb-space-2) 0;
+}
+
+.rd-panel__title {
+  margin: 0;
+  font-size: var(--skb-text-lg);
+  font-weight: 600;
+}
+
+.rd-panel__group {
+  display: grid;
+  gap: var(--skb-space-4);
+  padding: var(--skb-space-4) 0;
+}
+
+.rd-panel__group + .rd-panel__group {
+  border-top: 1px solid var(--skb-line);
+}
+
+.rd-panel__group:last-child {
+  padding-bottom: 0;
+}
+
+.rd-panel__shared {
+  margin: calc(-1 * var(--skb-space-2)) 0 0;
+}
+
+.rd-swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border: 1px solid var(--skb-line-strong);
+  border-radius: 50%;
+}
+
+.rd-swatch--auto { background: linear-gradient(135deg, #F2F4EF 50%, #141C18 50%); }
+.rd-swatch--light { background: #F2F4EF; }
+.rd-swatch--sepia { background: #F4ECDC; }
+.rd-swatch--dark { background: #141C18; }
+
+.skb-seg > label.rd-font-serif {
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-md);
+}
+
+.skb-seg > label.rd-font-sans {
+  font-family: var(--skb-font-ui);
+}
+
+.rd-size {
+  align-items: center;
+}
+
+.rd-size > .rd-stepper {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.rd-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-1);
+}
+
+.rd-stepper__value {
+  min-width: 52px;
+  color: var(--skb-ink);
+  font-size: var(--skb-text-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+/* ── Start page ─────────────────────────────────────────────────────────── */
+
+.rd-home {
+  padding: clamp(var(--skb-space-8), 9vh, 88px) var(--rd-gutter) var(--skb-space-12);
+}
+
+.rd-home__inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.rd-home__title {
+  margin: 0 0 var(--skb-space-3);
+  font: 400 clamp(29px, 4.6vw, 40px) / 1.15 var(--skb-font-read);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.rd-home__title:focus {
+  outline: none;
+}
+
+.rd-home__lead {
+  max-width: 34em;
+  margin: 0 0 var(--skb-space-8);
+  color: var(--skb-ink-soft);
+  font: 400 clamp(17px, 2.2vw, 19px) / 1.55 var(--skb-font-read);
+  text-wrap: pretty;
+}
+
+.rd-home .skb-rb {
+  font-weight: var(--rd-weight);
+}
+
+.rd-home__lead .skb-rb {
+  color: inherit;
+}
+
+.rd-message {
+  margin: 0 0 var(--skb-space-6);
+}
+
+.rd-message:focus {
+  outline: none;
+}
+
+.rd-notice {
+  font-size: var(--skb-text-md);
+}
+
+.rd-notice--busy {
+  color: var(--skb-ink-soft);
+}
+
+.rd-notice p {
+  margin: 0;
+}
+
+.rd-notice__title {
+  font-weight: 600;
+}
+
+.rd-notice__text {
+  margin-top: 2px;
+}
+
+.rd-notice__title + .rd-notice__text,
+.rd-notice > * + .rd-password,
+.rd-notice__actions {
+  margin-top: var(--skb-space-3) !important;
+}
+
+.rd-notice__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2);
+}
+
+.rd-password {
+  display: grid;
+  gap: 6px;
+}
+
+.rd-password__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2);
+}
+
+.rd-password__row > .skb-input {
+  flex: 1 1 180px;
+  width: auto;
+}
+
+/* Continue where you left off */
+.rd-continue {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--skb-space-4);
+  margin: 0 0 var(--skb-space-5);
+  padding: var(--skb-space-4) var(--skb-space-5);
+  overflow: hidden;
+}
+
+.rd-continue::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: var(--rd-read, 0%);
+  height: 3px;
+  background: var(--skb-accent);
+}
+
+.rd-continue__text {
+  min-width: 0;
+}
+
+.rd-continue__text p {
+  margin: 0;
+}
+
+.rd-continue__label {
+  color: var(--skb-accent-ink);
+  font-size: var(--skb-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.rd-continue__title {
+  margin-top: 2px !important;
+  overflow: hidden;
+  font: 600 var(--skb-text-lg) / 1.35 var(--skb-font-read);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rd-continue__meta {
+  margin-top: 2px !important;
+  font-size: var(--skb-text-sm);
+}
+
+.rd-continue__actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--skb-space-2);
+}
+
+/* The paste and drop box */
+.rd-drop {
+  border: 1.5px dashed var(--skb-line-strong);
+  border-radius: var(--skb-radius-lg);
+  background: var(--skb-surface);
+  transition: border-color var(--skb-dur) var(--skb-ease), box-shadow var(--skb-dur) var(--skb-ease);
+}
+
+.rd-drop:focus-within {
+  border-style: solid;
+  border-color: var(--skb-accent);
+  box-shadow: 0 0 0 3px var(--skb-accent-tint);
+}
+
+.rd-drop__input {
+  display: block;
+  width: 100%;
+  min-height: 176px;
+  margin: 0;
+  padding: var(--skb-space-5) var(--skb-space-5) var(--skb-space-2);
+  border: 0;
+  border-radius: var(--skb-radius-lg) var(--skb-radius-lg) 0 0;
+  background: transparent;
+  color: var(--skb-ink);
+  font: 400 var(--skb-text-xl) / 1.6 var(--skb-font-read);
+  resize: vertical;
+}
+
+/* The box around it carries the focus ring. */
+.rd-drop__input:focus-visible {
+  outline: none;
+}
+
+.rd-drop__input::placeholder {
+  color: var(--skb-ink-soft);
+  opacity: 1;
+}
+
+.rd-drop__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--skb-space-3);
+  padding: var(--skb-space-3) var(--skb-space-3) var(--skb-space-3) var(--skb-space-5);
+}
+
+/* Stays at the right edge when the bar wraps on a phone. */
+.rd-drop__bar > .skb-btn--primary {
+  margin-left: auto;
+}
+
+.rd-drop__hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--skb-space-2);
+  margin: 0;
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+}
+
+.rd-drop__hint > svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.rd-home__formats {
+  margin: var(--skb-space-3) 0 0;
+  font-size: var(--skb-text-sm);
+}
+
+.rd-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2) var(--skb-space-5);
+  margin: var(--skb-space-8) 0 0;
+  padding: 0;
+  font-size: var(--skb-text-sm);
+  list-style: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .rd-keys {
+    display: none;
+  }
+}
+
+/* ── The document ───────────────────────────────────────────────────────── */
+
+.rd-doc {
+  --rd-pad: clamp(20px, 5vw, 40px);
+  width: 100%;
+  max-width: calc(var(--rd-measure) + 2 * var(--rd-pad));
+  margin: 0 auto;
+  padding: clamp(var(--skb-space-6), 6vh, var(--skb-space-12)) var(--rd-pad) 40vh;
+  color: var(--skb-ink);
+  font-family: var(--rd-font);
+  font-size: var(--rd-size);
+  line-height: var(--rd-leading);
+  font-kerning: normal;
+  overflow-wrap: break-word;
+}
+
+/* Focus lands here so screen readers start at the text; there is nothing to operate. */
+.rd-doc:focus {
+  outline: none;
+}
+
+.rd-doc__head {
+  margin: 0 0 2.2em;
+  padding-bottom: var(--skb-space-3);
+  border-bottom: 1px solid var(--skb-line);
+  font-family: var(--skb-font-ui);
+  line-height: 1.4;
+}
+
+.rd-doc__head p {
+  margin: 0;
+}
+
+.rd-doc__title {
+  overflow: hidden;
+  color: var(--skb-ink);
+  font-size: var(--skb-text-md);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rd-doc__meta {
+  margin-top: 2px !important;
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+}
+
+.rd-sec {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
+.rd-doc__body :is(p, ul, ol, blockquote, pre) {
+  margin: 0 0 1em;
+}
+
+.rd-doc__body :is(h1, h2, h3, h4, h5, h6) {
+  margin: 1.7em 0 0.55em;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.rd-doc__body h1 { font-size: 1.75em; }
+.rd-doc__body h2 { font-size: 1.4em; }
+.rd-doc__body h3 { font-size: 1.2em; }
+.rd-doc__body :is(h4, h5, h6) { font-size: 1.05em; }
+
+.rd-doc__body .rd-sec:first-child > :first-child {
+  margin-top: 0;
+}
+
+.rd-doc__body :is(ul, ol) {
+  padding-left: 1.4em;
+}
+
+.rd-doc__body li {
+  margin: 0 0 0.35em;
+  padding-left: 0.2em;
+}
+
+.rd-doc__body li::marker {
+  color: var(--skb-ink-soft);
+}
+
+.rd-doc__body li.rd-li-more {
+  list-style: none;
+}
+
+.rd-doc__body blockquote {
+  padding: 0 0 0 1em;
+  border-left: 3px solid var(--skb-line-strong);
+}
+
+.rd-doc__body blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+.rd-doc__body hr {
+  width: 36%;
+  height: 1px;
+  margin: 2.2em auto;
+  border: 0;
+  background: var(--skb-line);
+}
+
+.rd-code {
+  padding: 0.9em 1.1em;
+  border-radius: var(--skb-radius-md);
+  background: var(--skb-surface-sunk);
+  font: 400 0.78em / 1.6 ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 4;
+}
+
+.rd-note {
+  color: var(--skb-ink-soft);
+  font: italic 400 var(--skb-text-sm) / 1.5 var(--skb-font-ui);
+}
+
+.rd-page {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-3);
+  margin: 2.4em 0 1.6em !important;
+  color: var(--skb-ink-soft);
+  font: 500 var(--skb-text-xs) / 1 var(--skb-font-ui);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rd-page::before,
+.rd-page::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--skb-line);
+}
+
+/* Bold word starts, and the optional fade of the rest of each word. */
+.skb-rb {
+  font-weight: var(--rd-weight);
+}
+
+.rd-doc__body :is(p, li, h1, h2, h3, h4, h5, h6):not(.rd-note, .rd-page) {
+  color: color-mix(in srgb, var(--skb-ink) var(--rd-rest), transparent);
+}
+
+.rd-doc__body .skb-rb {
+  color: var(--skb-ink);
+}
+
+:root[data-bold="off"] .skb-rb {
+  font-weight: inherit;
+}
+
+:root[data-bold="off"] .rd-doc__body :is(p, li, h1, h2, h3, h4, h5, h6):not(.rd-note, .rd-page) {
+  color: var(--skb-ink);
+}
+
+.rd-doc__loading {
+  margin: 1.5em 0 0;
+  color: var(--skb-ink-soft);
+  font: 400 var(--skb-text-sm) / 1.5 var(--skb-font-ui);
+  text-align: center;
+}
+
+.rd-doc__end {
+  margin-top: 3.5em;
+  padding-top: var(--skb-space-6);
+  border-top: 1px solid var(--skb-line);
+  font-family: var(--skb-font-ui);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.rd-doc__end-mark {
+  margin: 0 0 var(--skb-space-4);
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+}
+
+.rd-doc__end-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--skb-space-2);
+}
+
+/* ── Drag and drop, file input ──────────────────────────────────────────── */
+
+.rd-dropzone {
+  position: fixed;
+  inset: var(--skb-space-3);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--skb-accent);
+  border-radius: var(--skb-radius-lg);
+  background: color-mix(in srgb, var(--skb-paper) 90%, transparent);
+  pointer-events: none;
+}
+
+.rd-dropzone__label {
+  margin: 0;
+  color: var(--skb-accent-ink);
+  font: 400 var(--skb-text-3xl) / 1.2 var(--skb-font-read);
+}
+
+.rd-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Narrow screens ─────────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+  .rd-bar__title {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 640px) {
+  .rd-brand__sub {
+    display: none;
+  }
+
+  .rd-tool {
+    width: 36px;
+    padding: 0;
+  }
+
+  .rd-tool__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* The column already fills the screen, so a longer line has no effect. */
+  .rd-width-field {
+    display: none;
+  }
+
+  .rd-continue {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rd-continue__actions {
+    justify-content: space-between;
+  }
+
+  /* The panel becomes a sheet along the bottom edge, within reach of a thumb. */
+  .rd-panel {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-height: 82dvh;
+    padding-bottom: calc(var(--skb-space-5) + env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: var(--skb-radius-lg) var(--skb-radius-lg) 0 0;
+  }
+
+  .rd-panel:not(:popover-open) {
+    transform: translateY(24px);
+  }
+
+  @starting-style {
+    .rd-panel:popover-open {
+      transform: translateY(24px);
+    }
+  }
+
+  .rd-panel::backdrop {
+    background: rgb(0 0 0 / 0.25);
+  }
+}
+
+@media (max-width: 420px) {
+  .rd-brand__name,
+  .rd-bar__sep {
+    display: none;
+  }
+
+  .rd-drop__input {
+    min-height: 150px;
+    font-size: var(--skb-text-lg);
+  }
+
+  .rd-drop__bar {
+    padding-left: var(--skb-space-4);
+  }
+}
+
+/* ── Print: just the text ───────────────────────────────────────────────── */
+
+@media print {
+  .rd-bar,
+  .rd-home,
+  .rd-panel,
+  .rd-skip,
+  .rd-doc__end,
+  .rd-doc__loading,
+  .rd-dropzone {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .rd-doc {
+    max-width: none;
+    padding: 0;
+    color: #000;
+  }
+
+  .rd-sec {
+    content-visibility: visible;
+  }
+}

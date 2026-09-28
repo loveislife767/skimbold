@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skimbold settings</title>
+  <link rel="icon" href="../icons/icon-32.png">
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <p class="top__brand">
+        <img src="../icons/icon.svg" width="32" height="32" alt="">
+        <span class="skb-wordmark"><b>Skim</b>bold</span>
+      </p>
+      <a class="skb-btn skb-btn--small" href="../reader/reader.html" target="_blank">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 5.5C8.2 4.3 5.9 3.8 3 4v11c2.9-.2 5.2.3 7 1.5 1.8-1.2 4.1-1.7 7-1.5V4c-2.9-.2-5.2.3-7 1.5Z"/><path d="M10 5.5v11"/></svg>
+        Open Reader
+      </a>
+    </header>
+
+    <main>
+      <h1 class="title">Settings</h1>
+      <p class="lead skb-muted">Changes apply straight away, on every page where Skimbold is on.</p>
+
+      <section class="section" aria-labelledby="reading-title">
+        <h2 class="section__title" id="reading-title">Reading</h2>
+        <div class="skb-card stack fields">
+          <p class="preview" id="preview"><span class="skb-sr-only">Preview: </span><span id="preview-text"></span></p>
+
+          <div class="skb-field">
+            <span class="skb-field__label" id="letters-label">Bold letters</span>
+            <div class="skb-seg" role="radiogroup" aria-labelledby="letters-label" aria-describedby="letters-hint" id="letters">
+              <input type="radio" name="letters" id="letters-auto" value="auto">
+              <label for="letters-auto">Auto</label>
+              <input type="radio" name="letters" id="letters-1" value="1">
+              <label for="letters-1">1</label>
+              <input type="radio" name="letters" id="letters-2" value="2">
+              <label for="letters-2">2</label>
+              <input type="radio" name="letters" id="letters-3" value="3">
+              <label for="letters-3">3</label>
+            </div>
+            <p class="skb-field__hint" id="letters-hint">Auto bolds more of longer words. A number sets how many letters.</p>
+          </div>
+
+          <div class="skb-field" id="strength-field">
+            <label class="skb-field__label" for="strength">Strength</label>
+            <output class="skb-field__value" for="strength" id="strength-value">3</output>
+            <input class="skb-range" type="range" id="strength" min="1" max="5" step="1" value="3" aria-describedby="strength-hint">
+            <p class="skb-field__hint" id="strength-hint">How much of each word is bold in Auto mode.</p>
+          </div>
+
+          <div class="skb-field">
+            <span class="skb-field__label" id="weight-label">Boldness</span>
+            <div class="skb-seg" role="radiogroup" aria-labelledby="weight-label" id="weight">
+              <input type="radio" name="weight" id="weight-600" value="600">
+              <label for="weight-600" style="font-weight:600">Semi</label>
+              <input type="radio" name="weight" id="weight-700" value="700">
+              <label for="weight-700" style="font-weight:700">Bold</label>
+              <input type="radio" name="weight" id="weight-800" value="800">
+              <label for="weight-800" style="font-weight:800">Heavy</label>
+              <input type="radio" name="weight" id="weight-900" value="900">
+              <label for="weight-900" style="font-weight:900">Black</label>
+            </div>
+          </div>
+
+          <div class="skb-field">
+            <label class="skb-field__label" for="fade">Fade rest of word</label>
+            <output class="skb-field__value" for="fade" id="fade-value">Off</output>
+            <input class="skb-range" type="range" id="fade" min="0" max="60" step="5" value="0" aria-describedby="fade-hint">
+            <p class="skb-field__hint" id="fade-hint">Dims the letters after the bold part, so the word starts stand out more.</p>
+          </div>
+
+          <div class="skb-field">
+            <span class="skb-field__label" id="skip-label">Skip short words</span>
+            <div class="skb-seg" role="radiogroup" aria-labelledby="skip-label" aria-describedby="skip-hint" id="skip-short">
+              <input type="radio" name="skipShort" id="skip-0" value="0">
+              <label for="skip-0">Off</label>
+              <input type="radio" name="skipShort" id="skip-1" value="1">
+              <label for="skip-1">1</label>
+              <input type="radio" name="skipShort" id="skip-2" value="2">
+              <label for="skip-2">2</label>
+              <input type="radio" name="skipShort" id="skip-3" value="3">
+              <label for="skip-3">3</label>
+            </div>
+            <p class="skb-field__hint" id="skip-hint">Words with this many letters or fewer stay plain.</p>
+          </div>
+
+          <div class="skb-field">
+            <span class="skb-field__label" id="nth-label">Words to bold</span>
+            <div class="skb-seg" role="radiogroup" aria-labelledby="nth-label" aria-describedby="nth-hint" id="every-nth">
+              <input type="radio" name="everyNth" id="nth-1" value="1">
+              <label for="nth-1">Every word</label>
+              <input type="radio" name="everyNth" id="nth-2" value="2">
+              <label for="nth-2">Every 2nd</label>
+              <input type="radio" name="everyNth" id="nth-3" value="3">
+              <label for="nth-3">Every 3rd</label>
+            </div>
+            <p class="skb-field__hint" id="nth-hint">Bolding fewer words gives a lighter touch.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="controls-title">
+        <h2 class="section__title" id="controls-title">Toolbar and shortcut</h2>
+        <div class="skb-card stack fields">
+          <div class="skb-field">
+            <label class="skb-field__label" for="icon-click">Clicking the toolbar icon</label>
+            <select class="skb-select" id="icon-click" aria-describedby="icon-click-hint">
+              <option value="popup">Opens the Skimbold panel</option>
+              <option value="toggle">Turns Skimbold on or off for the page</option>
+            </select>
+            <p class="skb-field__hint" id="icon-click-hint">Either way, right-click the icon to open the Reader.</p>
+          </div>
+
+          <div class="skb-field" id="shortcut-field">
+            <span class="skb-field__label" id="shortcut-label">Keyboard shortcut</span>
+            <div class="shortcut" role="group" aria-labelledby="shortcut-label" aria-describedby="shortcut-hint">
+              <span class="shortcut__keys" id="shortcut-keys"></span>
+              <button class="skb-btn skb-btn--small" type="button" id="change-shortcut">Change shortcut</button>
+            </div>
+            <p class="skb-field__hint" id="shortcut-hint">Turns Skimbold on or off for the page you’re reading. Browsers keep extension shortcuts on a page of their own.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="sites-title">
+        <h2 class="section__title" id="sites-title">Sites</h2>
+        <div class="skb-card stack">
+          <div class="skb-field">
+            <label class="skb-switch">
+              <span class="skb-field__label">Always on everywhere</span>
+              <input type="checkbox" role="switch" id="auto-all" aria-describedby="auto-all-hint">
+            </label>
+            <p class="skb-field__hint" id="auto-all-hint">Skimbold turns itself on for every website you open. Your browser asks you to allow access to all sites first.</p>
+          </div>
+
+          <div class="sites" id="auto-sites-block">
+            <h3 class="sites__title" id="auto-sites-title">Always on for these sites</h3>
+            <p class="skb-field__hint" id="auto-sites-hint">To add a site, open it, click the Skimbold icon and switch on “Always on”.</p>
+            <ul class="sites__list" id="auto-sites" aria-labelledby="auto-sites-title"></ul>
+            <p class="sites__empty skb-muted" id="auto-sites-empty">No sites yet.</p>
+          </div>
+
+          <div class="sites">
+            <h3 class="sites__title" id="excluded-sites-title">Skipped sites</h3>
+            <p class="skb-field__hint">Skimbold stays off on these sites even when it’s on everywhere.</p>
+            <ul class="sites__list" id="excluded-sites" aria-labelledby="excluded-sites-title"></ul>
+            <p class="sites__empty skb-muted" id="excluded-sites-empty">No sites skipped.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="reset-title">
+        <h2 class="section__title" id="reset-title">Start over</h2>
+        <div class="skb-card stack">
+          <p class="reset__text">Put every setting back the way it was when you installed Skimbold. This also clears both site lists.</p>
+          <div class="reset__actions" id="reset-start">
+            <button class="skb-btn skb-btn--danger" type="button" id="reset">Reset to defaults</button>
+          </div>
+          <div class="reset__confirm" id="reset-confirm" role="group" aria-labelledby="reset-question" hidden>
+            <p class="reset__question" id="reset-question">Reset all settings and clear both site lists?</p>
+            <div class="reset__actions">
+              <button class="skb-btn skb-btn--danger" type="button" id="reset-yes">Reset everything</button>
+              <button class="skb-btn skb-btn--ghost" type="button" id="reset-no">Cancel</button>
+            </div>
+          </div>
+          <p class="skb-muted reset__status" id="reset-status" role="status"></p>
+        </div>
+      </section>
+
+      <section class="section about" aria-labelledby="about-title">
+        <h2 class="section__title" id="about-title">About</h2>
+        <p><span class="skb-wordmark"><b>Skim</b>bold</span> <span id="version"></span></p>
+        <p class="skb-muted">Bolds the start of every word to help you focus and keep your place. Free and open source under the MIT licence. Skimbold has no tracking and makes no network requests of its own.</p>
+        <ul class="about__links">
+          <li><a href="https://github.com/loveislife767/skimbold" target="_blank" rel="noopener noreferrer">Source code on GitHub</a></li>
+          <li><a href="https://github.com/loveislife767/skimbold/issues" target="_blank" rel="noopener noreferrer">Report a problem</a></li>
+          <li><a href="https://loveislife767.github.io/skimbold/privacy.html" target="_blank" rel="noopener noreferrer">Privacy policy</a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <template id="site-item">
+    <li class="sites__item">
+      <span class="sites__host"></span>
+      <span class="sites__status skb-muted" hidden>Not allowed in this browser</span>
+      <button class="skb-btn skb-btn--small sites__allow" type="button" hidden>Allow</button>
+      <button class="skb-btn skb-btn--icon skb-btn--small skb-btn--ghost sites__remove" type="button">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m6 6 8 8M14 6l-8 8"/></svg>
+      </button>
+    </li>
+  </template>
+
+  <script src="../shared/settings.js"></script>
+  <script src="../shared/core.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

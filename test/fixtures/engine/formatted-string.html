@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A text component that skips empty text nodes</title>
+</head>
+<body>
+<h1><yt-formatted-string id="title"></yt-formatted-string></h1>
+<h2><yt-formatted-string id="count"></yt-formatted-string></h2>
+<script>
+  // YouTube's text component, yt-formatted-string, reduced to what matters here. Its DOM layer
+  // reads children through a scoped view that skips comments, blank text nodes and elements it did
+  // not make (it gives its own a scope class). updateText_ reuses the nodes that view shows, removes
+  // the rest from the end, and appends what is missing. A run is plain text or a span.
+  (function () {
+    const SCOPE = 'style-scope';
+    const shown = (node) => (node.nodeType === Node.COMMENT_NODE ? false
+      : node.nodeType === Node.TEXT_NODE ? node.data.trim() !== '' : node.classList.contains(SCOPE));
+    const first = (element) => {
+      let node = element.firstChild;
+      while (node !== null && !shown(node)) node = node.nextSibling;
+      return node;
+    };
+    const last = (element) => {
+      let node = element.lastChild;
+      while (node !== null && !shown(node)) node = node.previousSibling;
+      return node;
+    };
+    window.updateText = (id, runs) => {
+      const element = document.getElementById(id);
+      let node = first(element);
+      let done = 0;
+      while (done < runs.length && node !== null) {
+        const run = runs[done];
+        if (node.nodeName !== (run.span ? 'SPAN' : '#text')) break;
+        if (node.textContent !== run.text) node.textContent = run.text;
+        done++;
+        node = node.nextSibling;
+      }
+      if (node !== null) {
+        const keep = done > 0 ? node.previousSibling : null;
+        for (let child = last(element); child !== null && child !== keep; child = last(element)) element.removeChild(child);
+      }
+      const fragment = document.createDocumentFragment();
+      for (const run of runs.slice(done)) {
+        if (!run.span) {
+          fragment.appendChild(document.createTextNode(run.text));
+          continue;
+        }
+        const span = fragment.appendChild(document.createElement('span'));
+        span.className = SCOPE;
+        span.textContent = run.text;
+      }
+      element.appendChild(fragment);
+    };
+    // The placeholders it renders first: plain text.
+    window.updateText('title', [{ text: 'Harbour lights at dusk' }]);
+    window.updateText('count', [{ text: 'Comments' }]);
+  })();
+</script>
+</body>
+</html>
