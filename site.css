@@ -1,0 +1,653 @@
+/*
+ * Skimbold website. Built on the extension's design tokens (shared/theme.css): ledger paper,
+ * library ink, one bottle-green accent. The demo sheet is the one loud element; everything
+ * else stays quiet so the bold word starts carry the page.
+ */
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-padding-top: 88px;
+}
+
+body {
+  font-size: var(--skb-text-lg);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--skb-font-read);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: var(--skb-radius-xs);
+  background: var(--skb-surface-sunk);
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, 'SF Mono', Menlo, monospace;
+  font-size: 0.875em;
+  overflow-wrap: anywhere;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: var(--skb-space-4);
+}
+
+@media (min-width: 720px) {
+  .wrap {
+    padding-inline: var(--skb-space-8);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--skb-space-2);
+  left: var(--skb-space-2);
+  z-index: 10;
+  padding: var(--skb-space-2) var(--skb-space-3);
+  border-radius: var(--skb-radius-sm);
+  background: var(--skb-surface);
+  box-shadow: var(--skb-shadow-2);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ── Masthead ───────────────────────────────────────────────────────────── */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  border-bottom: 1px solid var(--skb-line);
+  background: var(--skb-paper);
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--skb-space-6);
+  min-height: 64px;
+}
+
+.brand {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  color: var(--skb-ink);
+  font-size: var(--skb-text-2xl);
+  text-decoration: none;
+}
+
+.brand img {
+  display: block;
+}
+
+.masthead__nav {
+  display: none;
+  gap: var(--skb-space-5);
+  margin-right: auto;
+  font-size: var(--skb-text-md);
+}
+
+.masthead__nav a,
+.footer__nav a {
+  color: var(--skb-ink-soft);
+  text-decoration: none;
+}
+
+.masthead__nav a:hover,
+.footer__nav a:hover {
+  color: var(--skb-ink);
+  text-decoration: underline;
+}
+
+.page-switch {
+  flex: none;
+  margin-left: auto;
+  gap: var(--skb-space-2);
+  font-size: var(--skb-text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (min-width: 820px) {
+  .masthead__nav {
+    display: flex;
+  }
+
+  .page-switch {
+    margin-left: 0;
+  }
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+
+.hero {
+  padding-top: clamp(40px, 7vw, 88px);
+  padding-bottom: var(--skb-space-10);
+}
+
+.hero__title {
+  max-width: 11.5em;
+  font-size: clamp(2.6rem, 1rem + 6.4vw, 6rem);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+}
+
+.hero__title b {
+  font-weight: 800;
+}
+
+/* Before the script runs the headline is already bold, so nothing flashes without it.
+   With it, the starts turn bold one word at a time, the way a page does on Alt+R. */
+.js .hero__title b {
+  font-weight: inherit;
+}
+
+.js .hero__title b.is-on {
+  font-weight: 800;
+}
+
+.hero__lead {
+  max-width: 34em;
+  margin-top: var(--skb-space-6);
+  font-family: var(--skb-font-read);
+  font-size: clamp(var(--skb-text-xl), 1rem + 0.6vw, 22px);
+  line-height: var(--skb-leading-read);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-3);
+  margin-top: var(--skb-space-8);
+}
+
+.hero__cta,
+.install__stores .skb-btn {
+  min-height: 44px;
+  padding-inline: var(--skb-space-5);
+  font-size: var(--skb-text-lg);
+}
+
+.hero__note {
+  margin-top: var(--skb-space-4);
+  font-size: var(--skb-text-md);
+}
+
+/* ── Demo sheet ─────────────────────────────────────────────────────────── */
+
+.demo {
+  padding-bottom: var(--skb-space-12);
+}
+
+.sheet {
+  border: 1px solid var(--skb-line);
+  border-radius: var(--skb-radius-lg);
+  background: var(--skb-surface);
+  box-shadow: var(--skb-shadow-2);
+}
+
+.sheet__head {
+  display: grid;
+  gap: var(--skb-space-4);
+  padding: var(--skb-space-5) var(--skb-space-4);
+  border-bottom: 1px solid var(--skb-line);
+}
+
+.sheet__title {
+  font-size: var(--skb-text-2xl);
+  font-weight: 700;
+}
+
+.demo__controls {
+  display: grid;
+  gap: var(--skb-space-4) var(--skb-space-6);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+  .sheet__head {
+    padding-inline: var(--skb-space-6);
+  }
+
+  .demo__controls {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
+}
+
+.demo__control {
+  align-content: start;
+}
+
+.sheet__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.demo__input,
+.demo__output {
+  display: flex;
+  flex-direction: column;
+  gap: var(--skb-space-2);
+  min-width: 0;
+  padding: var(--skb-space-5) var(--skb-space-4) var(--skb-space-6);
+}
+
+.demo__input {
+  border-bottom: 1px solid var(--skb-line);
+}
+
+@media (min-width: 640px) {
+  .demo__input,
+  .demo__output {
+    padding-inline: var(--skb-space-6);
+  }
+}
+
+@media (min-width: 900px) {
+  .sheet__body {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+
+  .demo__input {
+    border-right: 1px solid var(--skb-line);
+    border-bottom: 0;
+  }
+}
+
+.demo__label {
+  color: var(--skb-ink-soft);
+  font-size: var(--skb-text-sm);
+  font-weight: 600;
+}
+
+.demo__textarea {
+  flex: 1;
+  min-height: 12em;
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-lg);
+  line-height: var(--skb-leading-read);
+}
+
+.demo__source {
+  font-size: var(--skb-text-sm);
+}
+
+/* Ledger paper: a ruled line under every line of text and a margin rule on the left.
+   Sizes are in em so the rules follow the text size. */
+.ruled {
+  --rule: 1.75em;
+  padding: 0.1em 0 0 var(--skb-space-5);
+  border-left: 3px double var(--skb-accent-tint);
+  background-image: linear-gradient(to bottom, transparent calc(var(--rule) - 1px), var(--skb-line) calc(var(--rule) - 1px));
+  background-size: 100% var(--rule);
+  background-attachment: local;
+  line-height: var(--rule);
+}
+
+.demo__preview {
+  min-height: calc(7 * 1.75em);
+  max-height: calc(16 * 1.75em);
+  overflow-y: auto;
+  color: color-mix(in srgb, var(--skb-ink) calc(100% - var(--fade, 0%)), transparent);
+  font-family: var(--skb-font-read);
+  font-size: clamp(var(--skb-text-lg), 0.9rem + 0.5vw, 19px);
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.demo__preview b {
+  color: var(--skb-ink);
+  font-weight: 800;
+}
+
+.demo__preview:focus-visible {
+  outline-offset: 4px;
+}
+
+/* The whole-page preview from the masthead switch. Like the extension, the fade uses the
+   text's own colour (links stay link-coloured), and the bold start keeps it at full strength. */
+.skim {
+  -webkit-text-fill-color: color-mix(in srgb, currentColor calc(100% - var(--fade, 0%)), transparent);
+}
+
+.skim b {
+  font-weight: 800;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+
+.section {
+  padding-block: var(--skb-space-12);
+}
+
+@media (min-width: 720px) {
+  .section {
+    padding-block: 72px;
+  }
+}
+
+.section__title {
+  font-size: clamp(28px, 1.2rem + 1.8vw, var(--skb-text-4xl));
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section__lead {
+  max-width: 40em;
+  margin-top: var(--skb-space-3);
+  color: var(--skb-ink-soft);
+}
+
+/* How it works: a real sequence, so the numbers carry meaning. */
+.steps {
+  display: grid;
+  gap: var(--skb-space-8);
+  margin: var(--skb-space-8) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+@media (min-width: 860px) {
+  .steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--skb-space-10);
+  }
+}
+
+.steps__item {
+  counter-increment: step;
+  padding-top: var(--skb-space-4);
+  border-top: 2px solid var(--skb-ink);
+}
+
+.steps__item::before {
+  content: counter(step);
+  display: block;
+  margin-bottom: var(--skb-space-2);
+  color: var(--skb-accent-ink);
+  font: 800 var(--skb-text-4xl) / 1 var(--skb-font-read);
+}
+
+.steps__title {
+  margin-bottom: var(--skb-space-2);
+  font-size: var(--skb-text-2xl);
+  font-weight: 700;
+}
+
+/* Features: plain text on the page rather than a grid of boxes. */
+.features {
+  display: grid;
+  gap: var(--skb-space-8) var(--skb-space-10);
+  margin: var(--skb-space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .features {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.feature__icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--skb-space-3);
+  padding: 9px;
+  border-radius: var(--skb-radius-md);
+  background: var(--skb-surface-sunk);
+  color: var(--skb-accent-ink);
+}
+
+.feature__title {
+  margin-bottom: var(--skb-space-2);
+  font-size: var(--skb-text-xl);
+  font-weight: 700;
+}
+
+.feature p {
+  color: var(--skb-ink-soft);
+}
+
+/* ── Install ────────────────────────────────────────────────────────────── */
+
+/* Store buttons go in this row, one link each, next to the release download. */
+.install__stores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-3);
+  margin-top: var(--skb-space-6);
+}
+
+.install {
+  display: grid;
+  gap: var(--skb-space-10);
+  margin-top: var(--skb-space-10);
+}
+
+@media (min-width: 900px) {
+  .install {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--skb-space-12);
+  }
+}
+
+.install__block > * + * {
+  margin-top: var(--skb-space-3);
+}
+
+.install__block > .install__title + * {
+  margin-top: var(--skb-space-3);
+}
+
+.install__block > * + .install__title {
+  margin-top: var(--skb-space-8);
+}
+
+.install__title {
+  font-size: var(--skb-text-2xl);
+  font-weight: 700;
+}
+
+.install__steps {
+  display: grid;
+  gap: var(--skb-space-3);
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: install;
+}
+
+.install__steps li {
+  position: relative;
+  padding-left: 40px;
+  counter-increment: install;
+}
+
+.install__steps li::before {
+  content: counter(install);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--skb-line-strong);
+  border-radius: 50%;
+  background: var(--skb-surface);
+  font: 700 var(--skb-text-sm) / 1 var(--skb-font-ui);
+}
+
+.install__note {
+  font-size: var(--skb-text-md);
+}
+
+/* ── Reader band ────────────────────────────────────────────────────────── */
+
+.reader-band {
+  border-block: 1px solid var(--skb-line);
+  background: var(--skb-surface-sunk);
+}
+
+.reader-band__inner {
+  display: grid;
+  gap: var(--skb-space-5);
+  align-items: center;
+  padding-block: var(--skb-space-10);
+}
+
+@media (min-width: 820px) {
+  .reader-band__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--skb-space-10);
+  }
+}
+
+.reader-band__title {
+  margin-bottom: var(--skb-space-2);
+  font-size: clamp(var(--skb-text-2xl), 1rem + 1vw, 28px);
+  font-weight: 700;
+}
+
+.reader-band p {
+  max-width: 44em;
+  color: var(--skb-ink-soft);
+}
+
+.reader-band__cta {
+  justify-self: start;
+  min-height: 44px;
+  padding-inline: var(--skb-space-5);
+  font-size: var(--skb-text-lg);
+}
+
+/* ── Open source ────────────────────────────────────────────────────────── */
+
+.oss {
+  display: grid;
+  gap: var(--skb-space-3);
+  max-width: 44em;
+  margin-top: var(--skb-space-4);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid var(--skb-line);
+}
+
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--skb-space-4) var(--skb-space-8);
+  padding-block: var(--skb-space-8) var(--skb-space-12);
+}
+
+.footer__mark {
+  font-size: var(--skb-text-2xl);
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-2) var(--skb-space-5);
+  font-size: var(--skb-text-md);
+}
+
+/* ── Prose pages (privacy, 404) ─────────────────────────────────────────── */
+
+.prose {
+  max-width: 44em;
+  padding-block: var(--skb-space-10) var(--skb-space-12);
+}
+
+.prose h1 {
+  font-size: clamp(32px, 1.4rem + 2.4vw, var(--skb-text-5xl));
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.prose h2 {
+  margin-top: var(--skb-space-10);
+  font-size: var(--skb-text-2xl);
+  font-weight: 700;
+}
+
+.prose p,
+.prose ul {
+  margin-top: var(--skb-space-3);
+}
+
+.prose ul {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: var(--skb-space-2);
+}
+
+.prose h1.title-skim {
+  font-weight: 400;
+}
+
+.title-skim b {
+  font-weight: 800;
+}
+
+.prose__meta {
+  margin-top: var(--skb-space-3);
+  color: var(--skb-ink-soft);
+}
+
+.prose__summary {
+  margin-top: var(--skb-space-6);
+  padding: var(--skb-space-4) var(--skb-space-5);
+  border-left: 3px solid var(--skb-accent);
+  border-radius: var(--skb-radius-xs);
+  background: var(--skb-surface-sunk);
+  font-family: var(--skb-font-read);
+  font-size: var(--skb-text-xl);
+  line-height: var(--skb-leading-read);
+}
+
+.prose__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--skb-space-3);
+  margin-top: var(--skb-space-8);
+}
